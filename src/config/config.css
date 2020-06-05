@@ -1,0 +1,41 @@
+html {
+    --white: 247, 250, 253;
+    --theme: 66, 133, 244;
+    --black: 15, 15, 15;
+    width: 300px;
+    font-family: 'Roboto', sans-serif;
+    background-color: rgb(var(--white));
+}
+
+.color-input {
+    width: 0;
+    height: 0;
+    z-index: -1;
+    opacity: 0;
+}
+
+.color-label {
+    /* Box Model */
+    height: 30px;
+    width: 30px;
+    border-radius: 2em;
+    outline: none;
+
+    /* Display */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    /* Appearence */
+    background-color: rgb(var(--theme));
+
+    /* Animation */
+    transition: 0.25s;
+    
+    /* Other */
+    cursor: pointer;
+
+    position: absolute;
+    top: 100px;
+    left: 100px;
+}

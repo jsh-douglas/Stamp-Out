@@ -1,0 +1,29 @@
+{
+    "name": "unmarked.",
+    "version": "1.0",
+    "description": "...",
+    "permissions": [
+        "tabs",
+        "storage",
+        "activeTab"
+    ],
+    "manifest_version": 2,
+    "background": {
+        "scripts": ["/src/background scripts/background.js"],
+        "persistent": false
+    },
+    "options_page": "/src/config/config.html",
+    "page_action": {
+        "default_popup": "/src/popup/popup.html" 
+    },
+    "content_scripts": [
+        {
+            "matches": [
+              "*://twitter.com/*",
+              "*://www.reddit.com/*"
+            ],
+            "js": ["/src/content scripts/supported.js"],
+            "run_at": "document_start"
+        }
+    ]
+}

@@ -1,0 +1,18 @@
+{
+    "twitter.com": {
+        "urls": [
+            "https://twitter.com",
+            "http://twitter.com"
+        ],
+        "script": "twitter.js",
+        "theme": "0, 172, 238"
+    },
+    "reddit.com": {
+        "urls": [
+            "https://www.reddit.com",
+            "http://www.reddit.com"
+        ],
+        "script": "reddit.js",
+        "theme": "255, 86, 0"
+    }
+}

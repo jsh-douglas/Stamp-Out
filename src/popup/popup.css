@@ -1,0 +1,252 @@
+:root {
+    --white: 247, 250, 253;
+    --theme: 66, 133, 244;
+    --black: 15, 15, 15;
+    width: 300px;
+    font-family: 'Nunito', sans-serif;
+    background-color: rgb(var(--white));
+    
+}
+
+body {
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+}
+
+@keyframes spin {
+    20% {
+        transform: rotate(360deg);
+        animation-timing-function: steps(1, end);
+    }
+    100% {
+        transform: rotate(0deg);
+    }
+}
+
+
+.header {
+    width: 100%;
+    height: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px 0 50px 0;
+    background-color: rgb(var(--theme));
+    position: relative;
+}
+
+/* EFCB68 YELLOW */
+/* 13293D BLUE */
+
+.header > p {
+    color: white;
+    margin: 0;
+    font-size: 36px;
+    font-family: 'Yeseva One', cursive;
+    text-shadow: -1px 1px 0 rgba(0, 0, 0, 0.25),
+                 -2px 2px 0 rgba(0, 0, 0, 0.125);
+}
+
+.header > svg {
+    width: 100%;
+    position: absolute;
+    bottom: 0;
+}
+
+.header > svg > path {
+    display: block;
+}
+
+.menu {
+    width: 100%;
+    font-size: 18px;
+    padding: 25px 0;
+}
+
+/* USER */
+
+
+.menu__users {
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    max-height: 280px;
+    overflow-y: scroll;
+    padding: 10px 0;
+    box-shadow: inset 0 5px 5px rgba(var(--black), 0.1),
+                inset 0 -5px 5px rgba(var(--black), 0.1)
+    ;
+}
+
+.menu__users::-webkit-scrollbar {
+    width: 8px;
+}
+
+/* .menu__users::-webkit-scrollbar-track {
+    border-radius: 10px;
+    background-color: rgba(var(--black), 0.1);
+} */
+
+.menu__users::-webkit-scrollbar-thumb {
+    border-radius: 10px;
+    background-color: rgba(var(--black), 0.75);
+}
+
+.user {
+    /* Box Model*/
+    width: 100%;
+    box-sizing: border-box;
+    padding: 5px 20px;
+    
+
+    /* Display */
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    
+    /* Text */
+    font-family: inherit;
+
+    /* Animation */
+    transition: 0.125s;
+
+}
+
+.user:hover {
+    background-color: rgba(var(--black), 0.05);
+}
+
+.user__color-picker {
+    /* Positioning */
+    position: absolute;
+    z-index: -1;
+
+    /* Box Model */
+    width: 0;
+    height: 0;
+
+    /* Appearence */
+    opacity: 0;
+}
+
+.user__color {
+    /* Box Model */
+    height: 30px;
+    width: 30px;
+    border-radius: 2em;
+    outline: none;
+
+    /* Display */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    /* Appearence */
+    background-color: rgb(var(--theme));
+
+    /* Animation */
+    transition: 0.125s;
+    
+    /* Other */
+    cursor: pointer;
+}
+
+.user__color > i {
+    /* Text */
+    color: rgb(var(--white));
+    font-size: 0.75em;
+}
+
+.user__handle {
+    /* Box Model */
+    box-sizing: border-box;
+    max-width: 70%;
+    overflow: hidden;
+    padding: 0 5px;
+    
+    /* Text */
+    font-family: 'Nunito', sans-serif;
+    font-size: 1em;
+    font-weight: 500;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+
+    /* Other */
+    cursor: pointer;
+}
+
+.user__manage {
+    /* Box Model */
+    height: 30px;
+    width: 30px;
+    border-radius: 2em;
+
+    /* Display */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    /* Animation */
+    transition: 0.125s;
+
+    /* Other */
+    cursor: pointer;
+}
+
+.user__manage:hover {
+    background-color: rgb(var(--theme));
+}
+
+.user:nth-of-type(even).user__manage:hover {
+    background-color: var(--white-darker--hover);
+}
+
+.user__handle > p {
+    margin: 0;
+    font-weight: 700;
+    color: rgb(var(--black));
+}
+
+.menu__run {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.menu__run > button {
+    font-family: inherit;
+    font-size: inherit;
+    padding: 0.25em 1.5em;
+    margin-top: 1em;
+    cursor: pointer;
+    background-color: transparent;
+    border: 2px solid rgba(var(--theme), 0.8);
+    border-radius: 2em;
+    transition: 0.125s;
+    font-weight: 700;
+    outline: none;
+    color: rgb(var(--black));
+} 
+
+.menu__run > button:hover {
+    color: rgb(var(--white)); 
+    background-color: rgba(var(--theme), 0.8);
+    border-color: transparent;
+}
+
+.menu__run > button:hover > i {
+    color: rgb(var(--white)); 
+}
+
+.menu__run > button:active {
+    background-color: rgba(var(--theme), 1);
+    border-color: rgba(var(--theme), 1);
+}
+
+.menu__run > button > i {
+    transform: translateY(-0.1em);
+    font-size: 0.75em;
+    margin-right: 0.5em;
+}

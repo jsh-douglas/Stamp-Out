@@ -1,0 +1,27 @@
+{
+    "default": {
+        "background-color": "rgb(167, 180, 199)",
+        "border-radius": ".25em",
+        "box-shadow": "unset"
+    },
+    "0": {
+        "background-color": "rgb(255, 89, 114)",
+        "border-radius": ".25em",
+        "box-shadow": "unset"
+    },
+    "1": {
+        "background-color": "rgb(82, 119, 199)",
+        "border-radius": ".25em",
+        "box-shadow": "unset"
+    },
+    "2": {
+        "background-color": "rgb(249, 199, 79)",
+        "border-radius": ".25em",
+        "box-shadow": "unset"
+    },
+    "3": {
+        "background-color": "rgb(101, 207, 143)",
+        "border-radius": ".25em",
+        "box-shadow": "unset"
+    }
+}
