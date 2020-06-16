@@ -1,27 +1,23 @@
 {
+    "all": {
+        "borderRadius": ".25em",
+        "boxShadow": "unset",
+        "color": "rgba(0, 0, 0, 0)",
+        "transition": "0.5s"
+    },
     "default": {
-        "background-color": "rgb(167, 180, 199)",
-        "border-radius": ".25em",
-        "box-shadow": "unset"
+        "backgroundColor": "rgb(167, 180, 199)"
     },
     "0": {
-        "background-color": "rgb(255, 89, 114)",
-        "border-radius": ".25em",
-        "box-shadow": "unset"
+        "backgroundColor": "rgb(255, 89, 114)"
     },
     "1": {
-        "background-color": "rgb(82, 119, 199)",
-        "border-radius": ".25em",
-        "box-shadow": "unset"
+        "backgroundColor": "rgb(82, 119, 199)"
     },
     "2": {
-        "background-color": "rgb(249, 199, 79)",
-        "border-radius": ".25em",
-        "box-shadow": "unset"
+        "backgroundColor": "rgb(249, 199, 79)"
     },
     "3": {
-        "background-color": "rgb(101, 207, 143)",
-        "border-radius": ".25em",
-        "box-shadow": "unset"
+        "backgroundColor": "rgb(101, 207, 143)"
     }
 }
