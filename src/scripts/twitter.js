@@ -10,6 +10,7 @@ if (typeof(initComplete) === 'undefined') {
     // Declare users set
     window.allUsers = new Set();
     window.displayedUsers = new Set();
+    window.allUserInfo = [];
 
     // Get styling
     chrome.storage.sync.get(['userStyle'], result => {
@@ -17,6 +18,7 @@ if (typeof(initComplete) === 'undefined') {
         main();
     });
 }
+
 
 function main() {
     displayedUsers.clear();
@@ -28,39 +30,68 @@ function main() {
         displayedUsers.add(userPath);
     });
     
+    // chrome.runtime.sendMessage({allUsers: Array.from(allUsers), displayedUsers: Array.from(displayedUsers)});
+    
     // Convert users set to array to allow for indexing with the forEach() function.
     Array.from(displayedUsers).forEach((userPath, index) => {
+
         let userStyle;
-    
         // Unique styling is available for a limited number of users, revert to default if number of users exceeds this limit.
         if (typeof(pageStyle[index.toString()]) === 'undefined') {
             userStyle = pageStyle.default;
         } else {
             userStyle = pageStyle[index.toString()];
         }
+
+        allUserInfo.push({'path': userPath, 'color': userStyle.backgroundColor, "hidden": true});
     
-        chrome.runtime.sendMessage({index: index, username: userPath, color: userStyle.backgroundColor});
+        // chrome.runtime.sendMessage({index: index, username: userPath, color: userStyle.backgroundColor});
     
         // Apply styling to all hyperlinks.
-        document.querySelectorAll(`a[href='${userPath}']`).forEach(element => {
-            // Hide child elements.
-            for (let i = 0; i < element.children.length; i++) {
-                element.children[i].style.opacity = 0;
-            }
-    
-            // Apply Styling.
-            element.style.color = pageStyle.all.color;
-            element.style.transition = pageStyle.all.transition;
-            element.style.boxShadow= pageStyle.all.boxShadow;
-            element.style.backgroundColor = userStyle.backgroundColor;
-            
-    
-            // Profile pictures are circular and so have a border radius reflecting that.
-            if (element.className === profilePictureClass) {
-                element.style.borderRadius = '100%';
-            } else {
-                element.style.borderRadius = pageStyle.all.borderRadius;
-            }
-        }); 
+        hideUser(userPath, userStyle);
     });
+
+    chrome.runtime.sendMessage({allUserInfo: allUserInfo});
+}
+
+chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
+    const userIndex = allUserInfo.findIndex(user => user.path === message.userPath); 
+    allUserInfo[userIndex].hidden = !allUserInfo[userIndex].hidden;
+    if (allUserInfo[userIndex].hidden === false) {
+        showUser(message.userPath);
+    }
+    allUserInfo[userIndex].hidden ? hideUser(message.userPath, pageStyle.default) : showUser(message.userPath);
+    sendResponse({hidden: allUserInfo[userIndex].hidden});
+});
+
+function showUser(userPath) {
+    document.querySelectorAll(`a[href='${userPath}']`).forEach(element => {
+        element.removeAttribute('style');
+        for (let i = 0; i < element.children.length; i++) {
+            element.children[i].removeAttribute('style');
+        }
+    });
+}
+
+function hideUser(userPath, userStyle) {
+    document.querySelectorAll(`a[href='${userPath}']`).forEach(element => {
+        // Hide child elements.
+        for (let i = 0; i < element.children.length; i++) {
+            element.children[i].style.opacity = 0;
+        }
+
+        // Apply Styling.
+        element.style.color = pageStyle.all.color;
+        element.style.transition = pageStyle.all.transition;
+        element.style.boxShadow= pageStyle.all.boxShadow;
+        element.style.backgroundColor = userStyle.backgroundColor;
+        
+
+        // Profile pictures are circular and so have a border radius reflecting that.
+        if (element.className === profilePictureClass) {
+            element.style.borderRadius = '100%';
+        } else {
+            element.style.borderRadius = pageStyle.all.borderRadius;
+        }
+    }); 
 }

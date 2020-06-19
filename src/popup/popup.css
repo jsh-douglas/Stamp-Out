@@ -181,6 +181,8 @@ body {
     height: 30px;
     width: 30px;
     border-radius: 2em;
+    border: none;
+    outline: none;
 
     /* Display */
     display: flex;
