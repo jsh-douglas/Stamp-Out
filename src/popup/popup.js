@@ -10,10 +10,11 @@ window.addEventListener('load', async () => {
         let siteURL = result.activeSite;
 
         // Set popup color theme
-        root.style.setProperty('--theme', sites[siteURL].theme);
+        // root.style.setProperty('--theme', sites[siteURL].theme);
 
         // Run appropriate script on click
         document.getElementById('submit').addEventListener('click', () => {
+            console.log('clicked');
             chrome.tabs.executeScript({
                 file: `/src/scripts/${sites[siteURL].script}`
             });  
@@ -41,7 +42,11 @@ chrome.runtime.onMessage.addListener(message => {
     const allUserInfo = message.allUserInfo;
 
     let users = document.getElementById('users');
+    Array.from(document.getElementsByClassName('user')).forEach(user => {
+        user.remove();
+    });
     users.style.display = 'flex';
+    console.log(allUserInfo);
     allUserInfo.forEach((userInfo, index) => {
         let user = document.createElement('div');
         user.className = 'user';

@@ -1,5 +1,6 @@
 // Code only to be run once per instance of Twitter
 if (typeof(initComplete) === 'undefined') {
+    console.log('first ');
     // Prevent code repeating
     window.initComplete = true;
 
@@ -17,6 +18,8 @@ if (typeof(initComplete) === 'undefined') {
         window.pageStyle = result.userStyle;
         main();
     });
+} else {
+    main();
 }
 
 
@@ -29,6 +32,8 @@ function main() {
         allUsers.add(userPath);
         displayedUsers.add(userPath);
     });
+
+    console.log(allUsers);
     
     // chrome.runtime.sendMessage({allUsers: Array.from(allUsers), displayedUsers: Array.from(displayedUsers)});
     
@@ -43,7 +48,12 @@ function main() {
             userStyle = pageStyle[index.toString()];
         }
 
-        allUserInfo.push({'path': userPath, 'color': userStyle.backgroundColor, "hidden": true});
+        // Add user to allUserInfo if not already present
+        const alreadyExists = allUserInfo.some(user => user.path === userPath); 
+        if (!alreadyExists) {
+            allUserInfo.push({'path': userPath, 'color': userStyle.backgroundColor, "hidden": true});
+        }
+        
     
         // chrome.runtime.sendMessage({index: index, username: userPath, color: userStyle.backgroundColor});
     
@@ -51,7 +61,7 @@ function main() {
         hideUser(userPath, userStyle);
     });
 
-    chrome.runtime.sendMessage({allUserInfo: allUserInfo});
+    chrome.runtime.sendMessage({allUserInfo: allUserInfo, displayedUsers: displayedUsers});
 }
 
 chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
@@ -73,7 +83,9 @@ function showUser(userPath) {
     });
 }
 
-function hideUser(userPath, userStyle) {
+function hideUser(userPath) {
+    const userIndex = allUserInfo.findIndex(user => user.path === userPath)
+    userColor = allUserInfo[userIndex].color;
     document.querySelectorAll(`a[href='${userPath}']`).forEach(element => {
         // Hide child elements.
         for (let i = 0; i < element.children.length; i++) {
@@ -84,7 +96,7 @@ function hideUser(userPath, userStyle) {
         element.style.color = pageStyle.all.color;
         element.style.transition = pageStyle.all.transition;
         element.style.boxShadow= pageStyle.all.boxShadow;
-        element.style.backgroundColor = userStyle.backgroundColor;
+        element.style.backgroundColor = userColor;
         
 
         // Profile pictures are circular and so have a border radius reflecting that.
