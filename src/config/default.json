@@ -3,21 +3,30 @@
         "borderRadius": ".25em",
         "boxShadow": "unset",
         "color": "rgba(0, 0, 0, 0)",
-        "transition": "0.5s"
+        "transition": "0.2s"
     },
     "default": {
         "backgroundColor": "rgb(167, 180, 199)"
     },
     "0": {
-        "backgroundColor": "rgb(255, 89, 114)"
+        "backgroundColor": "rgb(255, 48, 86)"
     },
     "1": {
-        "backgroundColor": "rgb(82, 119, 199)"
+        "backgroundColor": "rgb(255, 174, 0)"
     },
     "2": {
-        "backgroundColor": "rgb(249, 199, 79)"
+        "backgroundColor": "rgb(255, 221, 0)"
     },
     "3": {
         "backgroundColor": "rgb(101, 207, 143)"
+    },
+    "4": {
+        "backgroundColor": "rgb(82, 119, 199)"
+    },
+    "5": {
+        "backgroundColor": "rgb(140, 0, 255)"
+    },
+    "6": {
+        "backgroundColor": "rgb(238, 87, 255)"
     }
 }

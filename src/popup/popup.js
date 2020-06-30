@@ -20,8 +20,6 @@ window.addEventListener('load', async () => {
 });
 
 
-
-
 chrome.runtime.onMessage.addListener(message => {
     const allUserInfo = message.allUserInfo;
     const displayedUsers = message.displayedUsers;

@@ -39,19 +39,27 @@ function main() {
         const alreadyExists = allUserInfo.some(user => user.path === userPath); 
 
         let userColor;
+        // Check if user is present in allUserInfo
         if (alreadyExists) {
+            // Update userColor
             const userInfo = allUserInfo.find(user => user.path === userPath);
             userColor = userInfo.color;
         } else {
             styleIndex = index;
+            // Loop until an available color is found
             while (true) {
                 console.log(styleIndex);
+                // Check if styleIndex is out of range for predefined colors
                 if (typeof pageStyle[styleIndex.toString()] === 'undefined') {
+                    // Update userColor
                     userColor = pageStyle.default.backgroundColor;
                     break;
                 } else {
+                    // Set userColor to predefined color based on index
                     userColor = pageStyle[index.toString()].backgroundColor;
+                    // Check if color is in use already
                     const colorUsed = allUserInfo.some(user => user.color === userColor && displayedUsers.has(user.path));
+                    // Loop if color is being used by another user
                     if (colorUsed) {
                         styleIndex += 1;
                     } else {
@@ -59,6 +67,7 @@ function main() {
                     }
                 }
             }
+            // Add user information to allUserInfo
             allUserInfo.push({'path': userPath, 'color': userColor, "hidden": true});
         }
 
@@ -89,10 +98,20 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
 
 function showUser(userPath) {
     document.querySelectorAll(`a[href='${userPath}']`).forEach(element => {
-        element.removeAttribute('style');
+        // element.removeAttribute('style');
+        // for (let i = 0; i < element.children.length; i++) {
+        //     element.children[i].removeAttribute('style');
+        // }
+        // Show child elements.
         for (let i = 0; i < element.children.length; i++) {
-            element.children[i].removeAttribute('style');
+            element.children[i].style.setProperty('opacity', 1);
         }
+
+        // Remove Styling.
+        element.style.removeProperty('background-color');
+        element.style.removeProperty('border-radius');
+        element.style.removeProperty('box-shadow');
+        element.style.removeProperty('color');
     });
 }
 
@@ -102,21 +121,22 @@ function hideUser(userPath) {
     document.querySelectorAll(`a[href='${userPath}']`).forEach(element => {
         // Hide child elements.
         for (let i = 0; i < element.children.length; i++) {
-            element.children[i].style.opacity = 0;
+            element.children[i].style.setProperty('transition', pageStyle.all.transition);
+            element.children[i].style.setProperty('opacity', 0);
         }
 
         // Apply Styling.
-        element.style.color = pageStyle.all.color;
-        element.style.transition = pageStyle.all.transition;
-        element.style.boxShadow= pageStyle.all.boxShadow;
-        element.style.backgroundColor = userColor;
+        element.style.setProperty('background-color', userColor);
+        element.style.setProperty('box-shadow', pageStyle.all.boxShadow);
+        element.style.setProperty('color', pageStyle.all.color);
+        element.style.setProperty('transition', pageStyle.all.transition);
         
-
+        
         // Profile pictures are circular and so have a border radius reflecting that.
         if (element.className === profilePictureClass) {
-            element.style.borderRadius = '100%';
+                   element.style.setProperty('border-radius', '100%');
         } else {
-            element.style.borderRadius = pageStyle.all.borderRadius;
+            element.style.setProperty('border-radius', pageStyle.all.borderRadius);
         }
     }); 
 }
