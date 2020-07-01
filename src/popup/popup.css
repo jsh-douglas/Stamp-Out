@@ -2,7 +2,7 @@
     --white: 247, 250, 253;
     --theme: 66, 133, 244;
     --black: 15, 15, 15;
-    width: 320px;
+    width: 350px;
     font-family: 'Nunito', sans-serif;
     background-color: rgb(var(--white));
     
@@ -36,9 +36,6 @@ body {
     position: relative;
 }
 
-/* EFCB68 YELLOW */
-/* 13293D BLUE */
-
 .header > p {
     color: white;
     margin: 0;
@@ -68,30 +65,30 @@ body {
 
 
 .menu__users {
-    display: none;
+    display: flex;
     flex-direction: column;
     align-items: center;
-    max-height: 280px;
+    max-height: 310px;
     overflow-y: scroll;
-    padding: 10px 0;
-    /* box-shadow: inset 0 5px 5px rgba(var(--black), 0.1),
-                inset 0 -5px 5px rgba(var(--black), 0.1)
-    ; */
-    transition: 1.5s ease-in-out;
+    transition: 1s ease-in-out;
+    box-shadow: 0 2px 6px -1px rgb(180, 180, 180);
+    border-radius: 10px;
+    /* padding: 15px 0; */
+    margin: 0 15px;
 }
 
 .menu__users::-webkit-scrollbar {
     width: 8px;
 }
 
-/* .menu__users::-webkit-scrollbar-track {
+.menu__users::-webkit-scrollbar-track {
     border-radius: 10px;
-    background-color: rgba(var(--black), 0.1);
-} */
+    background-color: rgba(var(--black), 0.05);
+}
 
 .menu__users::-webkit-scrollbar-thumb {
     border-radius: 10px;
-    background-color: rgba(var(--black), 0.75);
+    background-color: rgb(var(--theme));
 }
 
 .user {
@@ -212,17 +209,19 @@ body {
 }
 
 .menu__run {
-    width: 100%;
     display: flex;
     justify-content: center;
     align-items: center;
+    box-shadow: 0 2px 6px -1px rgb(180, 180, 180);
+    border-radius: 10px;
+    padding: 15px 0;
+    margin: 30px 15px;
 }
 
 .menu__run > button {
     font-family: inherit;
     font-size: inherit;
     padding: 0.25em 1.5em;
-    margin: 1.5em 0;
     cursor: pointer;
     background-color: transparent;
     border: 2px solid rgba(var(--theme), 1);

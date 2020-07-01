@@ -13,8 +13,8 @@ if (typeof(initComplete) === 'undefined') {
     window.allUserInfo = [];
 
     // Get styling
-    chrome.storage.sync.get(['userStyle'], result => {
-        window.pageStyle = result.userStyle;
+    chrome.storage.sync.get(['pageStyle'], result => {
+        window.pageStyle = result.pageStyle;
         main();
     });
 } else {
@@ -75,7 +75,7 @@ function main() {
         hideUser(userPath);
     });
 
-    chrome.runtime.sendMessage({allUserInfo: allUserInfo, displayedUsers: Array.from(displayedUsers)});
+    chrome.runtime.sendMessage({query: 'popupInit', allUserInfo: allUserInfo, displayedUsers: Array.from(displayedUsers)});
 }
 
 chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
@@ -98,10 +98,6 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
 
 function showUser(userPath) {
     document.querySelectorAll(`a[href='${userPath}']`).forEach(element => {
-        // element.removeAttribute('style');
-        // for (let i = 0; i < element.children.length; i++) {
-        //     element.children[i].removeAttribute('style');
-        // }
         // Show child elements.
         for (let i = 0; i < element.children.length; i++) {
             element.children[i].style.setProperty('opacity', 1);
