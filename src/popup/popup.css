@@ -1,254 +1,265 @@
 :root {
+    /* Variables */
     --white: 247, 250, 253;
     --theme: 66, 133, 244;
-    --black: 15, 15, 15;
-    width: 350px;
-    font-family: 'Nunito', sans-serif;
-    background-color: rgb(var(--white));
-    
+}
+
+* {
+    /* Box Model */
+    margin: 0;
+
+    user-select: none;
 }
 
 body {
-    margin: 0;
-    display: flex;
-    flex-direction: column;
+    /* Box Model */
+    box-sizing: border-box;
+    padding: 20px;
+
+    /* Appearence */
+    background-color: rgb(var(--white));
 }
 
-@keyframes spin {
-    20% {
-        transform: rotate(360deg);
-        animation-timing-function: steps(1, end);
-    }
-    100% {
-        transform: rotate(0deg);
-    }
+.popup {
+    /* Display */
+    display: grid;
+    grid-gap: 20px;
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: repeat(4, 1fr);
+
+    /* Box Model */
+    width: 600px;
+    height: 450px;
 }
 
-
-.header {
+.panel {
+    /* Box Model */
+    height: 100%;
     width: 100%;
-    height: 70px;
+    border-radius: 10px;
+
+    /* Appearence */
+    background-color: inherit;
+    box-shadow: 0 2px 6px -1px rgb(180, 180, 180);
+}
+
+.popup__text {
+    /* Text */
+    font-size: 18px;
+    font-weight: 600;
+}
+
+.popup__text--small {
+    /* Text */
+    font-size: 13px;
+}
+
+.popup__header {
+    /* Positioning */
+    position: relative;
+    grid-column: 2 / span 1;
+    grid-row: 1 / span 1;
+
+    /* Display */
     display: flex;
     justify-content: center;
     align-items: center;
-    padding: 20px 0 50px 0;
+
+    /* Appearence */
     background-color: rgb(var(--theme));
-    position: relative;
 }
 
-.header > p {
-    color: white;
+.popup__header > p {
+    /* Box Model */
     margin: 0;
+
+    /* Text */
+    color: white;
     font-size: 30px;
-    font-family: 'Yeseva One', cursive;
-    text-shadow: -1px 1px 0 rgba(0, 0, 0, 0.25),
-                 -2px 2px 0 rgba(0, 0, 0, 0.125);
 }
 
-.header > svg {
-    width: 100%;
+.popup__header > svg {
+    /* Positioning */
     position: absolute;
     bottom: 0;
+
+    /* Box Model */
+    width: 100%;
+    border-radius: inherit;
 }
 
-.header > svg > path {
+.popup__header > svg > path {
+    /* Display */
     display: block;
 }
 
-.menu {
-    width: 100%;
-    font-size: 18px;
-    padding-top: 15px;
+.popup__user-management {
+    /* Positioning */
+    grid-column: 1 / span 1;
+    grid-row: 1 / span 4;
 }
 
-/* USER */
+.popup__refresh {
+    /* Positioning */
+    grid-column: 2 / span 1;
+    grid-row: 2 / span 1;
+ 
+    /* Display */
+    display: grid;
+    grid-gap: 10px;
+    grid-template-rows: 1;
+    grid-template-columns: 1.5fr 1fr;
 
+    /* Box Model */
+    padding: 10px;
+    box-sizing: border-box;
+}
 
-.menu__users {
+.popup__config {
+    /* Positioning */
+    grid-column: 2 / span 1;
+    grid-row: 4 / span 1;
+    
+    /* Display */
+    display: grid;
+    grid-gap: 10px;
+    grid-template-rows: 1;
+    grid-template-columns: 1.5fr 1fr;
+    
+    /* Box Model */
+    padding: 10px;
+    box-sizing: border-box;
+}
+
+.popup__precise-time {
+    /* Positioning */
+    grid-column: 2 / span 1;
+    grid-row: 3 / span 1;
+
+    /* Display */
+    display: grid;
+    grid-gap: 10px;
+    grid-template-rows: 1;
+    grid-template-columns: 1.5fr 1fr;
+    padding: 10px;
+    box-sizing: border-box;
+}
+
+.popup__text-container {
+    /* Positioning */
+    position: relative;
+
+    /* Display */
     display: flex;
     flex-direction: column;
+    justify-content: center;
     align-items: center;
-    max-height: 310px;
-    overflow-y: scroll;
-    transition: 1s ease-in-out;
-    box-shadow: 0 2px 6px -1px rgb(180, 180, 180);
-    border-radius: 10px;
-    /* padding: 15px 0; */
-    margin: 0 15px;
-}
 
-.menu__users::-webkit-scrollbar {
-    width: 8px;
-}
-
-.menu__users::-webkit-scrollbar-track {
-    border-radius: 10px;
-    background-color: rgba(var(--black), 0.05);
-}
-
-.menu__users::-webkit-scrollbar-thumb {
-    border-radius: 10px;
-    background-color: rgb(var(--theme));
-}
-
-.user {
-    /* Box Model*/
-    width: 100%;
-    box-sizing: border-box;
-    padding: 5px 20px;
-    
-
-    /* Display */
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    
     /* Text */
-    font-family: inherit;
+    text-align: center; 
+}
 
+.popup__toggle-label {
+    /* Positioning */
+    position: relative;
+
+    /* Box Model */
+    width: 58px;
+    height: 30px;
+    border-radius: 2em;
+    
+    /* Display */
+    display: block;
+    
     /* Animation */
-    transition: 0.125s;
+    transition: 0.25s;
 
+    /* Other */
+    background-color: rgb(197, 200, 203);
+    cursor: pointer;
 }
 
-.user:hover {
-    background-color: rgba(var(--black), 0.05);
+.popup__toggle-input {
+    /* Display */
+    display: none;
 }
 
-.user__color-picker {
+.popup__toggle-label::after {
     /* Positioning */
     position: absolute;
-    z-index: -1;
+    left: 3px;
+    top: 3px;
 
     /* Box Model */
-    width: 0;
-    height: 0;
+    width: calc(50% - 6px);
+    height: calc(100% - 6px);
+    border-radius: 100px;
 
-    /* Appearence */
-    opacity: 0;
+    /* Display */
+    display: block;
+    
+    /* Animation */
+    transition: 0.25s;
+
+    /* Other */
+    content: '';
+    background-color: rgb(var(--white));
+}
+      
+.popup__toggle-input:checked + .popup__toggle-label::after {
+    /* Positioning */
+    left: 31px;
 }
 
-.user__color {
-    /* Box Model */
-    height: 30px;
-    width: 30px;
-    border-radius: 2em;
-    outline: none;
+.popup__toggle-input:checked + .popup__toggle-label {
+    /* Other */
+    background-color: rgb(var(--theme));
+}
 
+.popup__button-container {
+    /* Display */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.popup__button {
     /* Display */
     display: flex;
     justify-content: center;
     align-items: center;
 
-    /* Appearence */
-    background-color: rgb(var(--theme));
+    /* Box Model */
+    width: 40px;
+    height: 40px;
+    border: 2px solid rgb(var(--theme));
+    border-radius: 2em;
+
+    /* Text */
+    color: rgb(var(--theme));
+    font-size: 18px;
 
     /* Animation */
     transition: 0.125s;
-    
+
     /* Other */
+    background-color: inherit;
     cursor: pointer;
+    outline: none;
 }
 
-.user__color > i {
+.popup__button:hover {
     /* Text */
     color: rgb(var(--white));
-    font-size: 0.75em;
-}
-
-.user__handle {
-    /* Box Model */
-    box-sizing: border-box;
-    max-width: 70%;
-    overflow: hidden;
-    padding: 0 5px;
-    
-    /* Text */
-    font-family: 'Nunito', sans-serif;
-    font-size: 1em;
-    font-weight: 500;
-    white-space: nowrap;
-    text-overflow: ellipsis;
 
     /* Other */
-    cursor: default;
-}
-
-.user__manage {
-    /* Box Model */
-    height: 30px;
-    width: 30px;
-    border-radius: 2em;
-    border: none;
-    outline: none;
-
-    /* Display */
-    display: flex;
-    justify-content: center;
-    align-items: center;
-
-    /* Animation */
-    transition: 0.125s;
-
-    /* Other */
-    cursor: pointer;
-}
-
-.user__manage:hover {
     background-color: rgb(var(--theme));
 }
 
-.user:nth-of-type(even).user__manage:hover {
-    background-color: var(--white-darker--hover);
-}
-
-.user__handle > p {
-    margin: 0;
-    font-weight: 700;
-    color: rgb(var(--black));
-}
-
-.menu__run {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    box-shadow: 0 2px 6px -1px rgb(180, 180, 180);
-    border-radius: 10px;
-    padding: 15px 0;
-    margin: 30px 15px;
-}
-
-.menu__run > button {
-    font-family: inherit;
-    font-size: inherit;
-    padding: 0.25em 1.5em;
-    cursor: pointer;
-    background-color: transparent;
-    border: 2px solid rgba(var(--theme), 1);
-    border-radius: 2em;
-    transition: 0.125s;
-    font-weight: 700;
-    outline: none;
-    color: rgb(var(--black));
-} 
-
-.menu__run > button:hover {
-    color: rgb(var(--white)); 
-    background-color: rgba(var(--theme), 1);
+.popup__button:active {
+    /* Box Model */
     border-color: transparent;
-}
 
-.menu__run > button:hover > i {
-    color: rgb(var(--white));
-}
-
-.menu__run > button:active {
-    background-color: rgba(var(--theme), 1);
-    border-color: rgba(var(--theme), 1);
-}
-
-.menu__run > button > i {
-    transform: translateY(-0.1em);
-    font-size: 0.75em;
-    margin-right: 0.5em;
+    /* Other */
+    background-color: rgba(var(--theme), 0.8);
 }

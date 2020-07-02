@@ -23,6 +23,7 @@ if (typeof(initComplete) === 'undefined') {
 
 
 function main() {
+    convertDates();
     displayedUsers.clear();
 
     // Get all users present on page.
@@ -48,7 +49,6 @@ function main() {
             styleIndex = index;
             // Loop until an available color is found
             while (true) {
-                console.log(styleIndex);
                 // Check if styleIndex is out of range for predefined colors
                 if (typeof pageStyle[styleIndex.toString()] === 'undefined') {
                     // Update userColor
@@ -135,4 +135,13 @@ function hideUser(userPath) {
             element.style.setProperty('border-radius', pageStyle.all.borderRadius);
         }
     }); 
+}
+
+function convertDates() {
+    const times = document.getElementsByTagName('time');
+    for (let i = 0; i < times.length; i++) {
+        times[i].innerHTML = ( new Date(times[i].getAttribute('datetime')) ).toLocaleString().slice(0, -3);
+        times[i].style.fontWeight = '600';
+    }
+    
 }

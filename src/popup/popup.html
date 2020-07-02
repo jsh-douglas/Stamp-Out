@@ -3,25 +3,60 @@
 
 <head>
     <link rel="stylesheet" href="popup.css">
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.13.0/css/all.css">
-    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@700&family=Yeseva+One&display=swap" rel="stylesheet">
 </head>
 
 <body>
-    <div class="header">
-        <p>strikethrough.</p>
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320">
-            <path fill="#F7FAFD" fill-opacity="1"
-                d="M0,160L48,181.3C96,203,192,245,288,240C384,235,480,181,576,149.3C672,117,768,107,864,133.3C960,160,1056,224,1152,250.7C1248,277,1344,267,1392,261.3L1440,256L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z">
-            </path>
-        </svg>
-    </div>
-    <div class="menu">
-        <div class="menu__users" id="users">
+    <div class="popup">
+        <div class="popup__header panel">
+            <p>strikeout.</p>
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320">
+                <path fill="#F7FAFD" fill-opacity="1"
+                    d="M0,160L48,181.3C96,203,192,245,288,240C384,235,480,181,576,149.3C672,117,768,107,864,133.3C960,160,1056,224,1152,250.7C1248,277,1344,267,1392,261.3L1440,256L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z">
+                </path>
+            </svg>
         </div>
-        <div class="menu__run">
-            <button id="update"><i class="fas fa-sync-alt"></i>Update</button>
+
+        <div class="popup__user-management panel">
+            <div class="user">
+
+            </div>
+        </div>
+
+        <div class="popup__refresh panel">
+            <div class="popup__text-container">
+                <p class="popup__text">Refresh</p>
+            </div>
+
+            <div class="popup__button-container">
+                <button class="popup__button">
+                    <i class="fas fa-redo-alt"></i>
+                </button>
+            </div>
+        </div>
+
+        <div class="popup__precise-time panel">
+            <div class="popup__text-container">
+                <p class="popup__text">Precise Time</p>
+                <p class="popup__text--small">(Recommended)</p>
+            </div>
+
+            <div class="popup__button-container">
+                <input type="checkbox" id="precise-time" class="popup__toggle-input">
+                <label for="precise-time" class="popup__toggle-label"></label>
+            </div>
+        </div>
+
+        <div class="popup__config panel">
+            <div class="popup__text-container">
+                <p class="popup__text">Config</p>
+            </div>
+
+            <div class="popup__button-container">
+                <button class="popup__button">
+                    <i class="fas fa-external-link-alt"></i>
+                </button>
+            </div>
         </div>
     </div>
     <script src="popup.js" defer></script>

@@ -1,5 +1,9 @@
 const root = document.documentElement;
 
+document.getElementById('config').addEventListener('click', () => {
+    chrome.tabs.create({ url: 'src/config/config.html' });
+});
+
 // Wait for popup load
 window.addEventListener('load', async () => {
     // Fetch sites.json
@@ -14,6 +18,7 @@ window.addEventListener('load', async () => {
             chrome.tabs.executeScript({
                 file: `/src/scripts/${sites[siteURL].script}`
             });  
+            // chrome.tabs.create({ url: 'src/config/config.html' });
         });
     });
 });
