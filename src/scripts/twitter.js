@@ -1,5 +1,5 @@
 // Code only to be run once per instance of Twitter
-if (typeof(initComplete) === 'undefined') {
+if (typeof initComplete === 'undefined') {
     // Prevent code repeating
     window.initComplete = true;
 
@@ -58,7 +58,7 @@ function main() {
                     // Set userColor to predefined color based on index
                     userColor = pageStyle[index.toString()].backgroundColor;
                     // Check if color is in use already
-                    const colorUsed = allUserInfo.some(user => user.color === userColor && displayedUsers.has(user.path));
+                    const colorUsed = allUserInfo.some(user => user.color === userColor);
                     // Loop if color is being used by another user
                     if (colorUsed) {
                         styleIndex += 1;
@@ -81,11 +81,16 @@ function main() {
 chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
     let userIndex;
     switch (message.query) {
+        case 'alreadyRun':
+            if (typeof initComplete === 'undefined') {
+                chrome.runtime.sendMessage({query: 'popupInit', allUserInfo: allUserInfo, displayedUsers: Array.from(displayedUsers)});
+            }
+            // sendResponse({alreadyRun: typeof initComplete === 'undefined' ? false : true, displayedUsers: displayedUsers});
+            break; 
         case 'toggleVisibility':
             userIndex = allUserInfo.findIndex(user => user.path === message.userPath); 
             allUserInfo[userIndex].hidden = !allUserInfo[userIndex].hidden;
             allUserInfo[userIndex].hidden ? hideUser(message.userPath, pageStyle.default) : showUser(message.userPath);
-            sendResponse({hidden: allUserInfo[userIndex].hidden});
             break;
         case 'setColor':
             userIndex = allUserInfo.findIndex(user => user.path === message.userPath); 
@@ -95,6 +100,7 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
     }
     
 });
+
 
 function showUser(userPath) {
     document.querySelectorAll(`a[href='${userPath}']`).forEach(element => {
@@ -143,5 +149,4 @@ function convertDates() {
         times[i].innerHTML = ( new Date(times[i].getAttribute('datetime')) ).toLocaleString().slice(0, -3);
         times[i].style.fontWeight = '600';
     }
-    
 }

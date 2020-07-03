@@ -1,7 +1,13 @@
+/* 
+| ------------------------------------
+|| General Styles 
+| ------------------------------------
+*/
+
 :root {
     /* Variables */
     --white: 247, 250, 253;
-    --theme: 66, 133, 244;
+    --theme: 255, 195, 66;
 }
 
 * {
@@ -19,6 +25,12 @@ body {
     /* Appearence */
     background-color: rgb(var(--white));
 }
+
+/*
+| ------------------------------------
+|| Popup Styles
+| ------------------------------------
+*/
 
 .popup {
     /* Display */
@@ -53,6 +65,12 @@ body {
     /* Text */
     font-size: 13px;
 }
+
+/*
+| ------------------------------------
+|| Popup Header Styles
+| ------------------------------------
+*/
 
 .popup__header {
     /* Positioning */
@@ -93,11 +111,106 @@ body {
     display: block;
 }
 
+/*
+| ------------------------------------
+|| Popup User Management Styles
+| ------------------------------------
+*/
+
 .popup__user-management {
     /* Positioning */
     grid-column: 1 / span 1;
     grid-row: 1 / span 4;
 }
+
+.popup__user {
+    /* Display */
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    /* Box Model */
+    width: 100%;
+    height: 45px;
+    padding: 5px 10px;
+    box-sizing: border-box;
+    border-radius: inherit;
+    
+    /* Other */
+    transition: 0.1s;
+}
+
+.popup__user:hover {
+    /* Other */
+    background-color: rgba(0, 3, 6, 0.05);
+}
+
+.popup__user-color-container {
+    /* Box Model */
+    width:35px;
+    height: 35px;
+
+    /* Display */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.popup__user-color-label {
+    /* Box Model */
+    width: 30px;
+    height: 30px;
+    border-radius: 100%;
+
+    /* Display */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    /* Other */
+    background-color: rgb(var(--theme));
+    cursor: pointer;
+}
+
+.popup__user-color-input {
+    /* Positioning */
+    position: absolute;
+    z-index: -1;
+
+    /* Box Model */
+    width: 0;
+    height: 0;
+
+    /* Other */
+    opacity: 0;
+}
+
+.popup__user-color-label > i {
+    /* Text */
+    font-size: 13px;
+    color: rgb(var(--white));
+}
+
+.popup__username {
+    /* Box Model */
+    width: 167px;
+    height: 100%;
+
+    /* Display */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    /* Text */
+    font-size: 18px;
+    font-weight: 600;
+}
+
+/*
+| ------------------------------------
+|| Popup Refresh Styles
+| ------------------------------------
+*/
 
 .popup__refresh {
     /* Positioning */
@@ -115,6 +228,12 @@ body {
     box-sizing: border-box;
 }
 
+/* 
+| ------------------------------------
+|| Popup Config Styles 
+| ------------------------------------
+*/
+
 .popup__config {
     /* Positioning */
     grid-column: 2 / span 1;
@@ -130,6 +249,12 @@ body {
     padding: 10px;
     box-sizing: border-box;
 }
+
+/* 
+| ------------------------------------
+|| Popup Precise Time Toggle Styles
+| ------------------------------------
+*/
 
 .popup__precise-time {
     /* Positioning */
@@ -159,62 +284,11 @@ body {
     text-align: center; 
 }
 
-.popup__toggle-label {
-    /* Positioning */
-    position: relative;
-
-    /* Box Model */
-    width: 58px;
-    height: 30px;
-    border-radius: 2em;
-    
-    /* Display */
-    display: block;
-    
-    /* Animation */
-    transition: 0.25s;
-
-    /* Other */
-    background-color: rgb(197, 200, 203);
-    cursor: pointer;
-}
-
-.popup__toggle-input {
-    /* Display */
-    display: none;
-}
-
-.popup__toggle-label::after {
-    /* Positioning */
-    position: absolute;
-    left: 3px;
-    top: 3px;
-
-    /* Box Model */
-    width: calc(50% - 6px);
-    height: calc(100% - 6px);
-    border-radius: 100px;
-
-    /* Display */
-    display: block;
-    
-    /* Animation */
-    transition: 0.25s;
-
-    /* Other */
-    content: '';
-    background-color: rgb(var(--white));
-}
-      
-.popup__toggle-input:checked + .popup__toggle-label::after {
-    /* Positioning */
-    left: 31px;
-}
-
-.popup__toggle-input:checked + .popup__toggle-label {
-    /* Other */
-    background-color: rgb(var(--theme));
-}
+/* 
+| ------------------------------------
+|| Popup Input Styling
+| ------------------------------------
+*/
 
 .popup__button-container {
     /* Display */
@@ -262,4 +336,85 @@ body {
 
     /* Other */
     background-color: rgba(var(--theme), 0.8);
+}
+
+.popup__toggle-label {
+    /* Positioning */
+    position: relative;
+
+    /* Box Model */
+    width: 58px;
+    height: 30px;
+    border-radius: 2em;
+    
+    /* Display */
+    display: block;
+    
+    /* Animation */
+    transition: 0.25s;
+
+    /* Other */
+    background-color: rgb(197, 200, 203);
+    cursor: pointer;
+}
+
+.popup__toggle-input {
+    /* Display */
+    display: none;
+}
+
+.toggle-switch {
+    /* Positioning */
+    position: absolute;
+    left: 3px;
+    top: 3px;
+
+    /* Box Model */
+    width: calc(50% - 6px);
+    height: calc(100% - 6px);
+    border-radius: 100px;
+
+    /* Display */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    
+    /* Animation */
+    transition: 0.25s;
+
+    /* Other */
+    content: '';
+    background-color: rgb(var(--white));
+}
+
+.toggle-switch > i {
+    color: rgb(var(--theme))
+}
+      
+.popup__toggle-input:checked + .popup__toggle-label > .toggle-switch {
+    /* Positioning */
+    left: 31px;
+}
+
+.popup__toggle-input:checked + .popup__toggle-label > .toggle-switch > .toggle-hidden {
+    display: block;
+}
+
+.popup__toggle-input:checked + .popup__toggle-label > .toggle-switch > .toggle-visible {
+    display: none;
+    color: rgb(197, 200, 203);
+}
+
+.popup__toggle-input:not(checked) + .popup__toggle-label > .toggle-switch > .toggle-hidden {
+    display: none;
+}
+
+.popup__toggle-input:not(checked) + .popup__toggle-label > .toggle-switch > .toggle-visible {
+    display: block;
+    color: rgb(197, 200, 203);
+}
+
+.popup__toggle-input:checked + .popup__toggle-label {
+    /* Other */
+    background-color: rgb(var(--theme));
 }
