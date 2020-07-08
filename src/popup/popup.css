@@ -121,7 +121,23 @@ body {
     /* Positioning */
     grid-column: 1 / span 1;
     grid-row: 1 / span 4;
+    overflow-y: scroll;
 }
+
+.popup__user-management::-webkit-scrollbar {
+    width: 8px;
+}
+
+.popup__user-management::-webkit-scrollbar-track {
+    border-radius: 10px;
+    background-color: rgba(var(--black), 0.05);
+}
+
+.popup__user-management::-webkit-scrollbar-thumb {
+    border-radius: 10px;
+    background-color: rgb(var(--theme));
+}
+
 
 .popup__user {
     /* Display */
@@ -204,6 +220,7 @@ body {
     /* Text */
     font-size: 18px;
     font-weight: 600;
+    text-overflow: ellipsis;
 }
 
 /*

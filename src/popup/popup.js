@@ -1,93 +1,120 @@
-const root = document.documentElement;
+// - - - - - - - - - - - - - - - - - - -
+//  Port Messaging
+// - - - - - - - - - - - - - - - - - - -
 
-document.getElementById('config-button').addEventListener('click', () => {
-    chrome.tabs.create({ url: 'src/config/config.html' });
-});
+chrome.runtime.onConnect.addListener(port => {
+    if (port.name === 'popupConnection') {
+        window.port = port;
+        port.onMessage.addListener(message => {
+            switch (message.query) {
+                case 'scriptLoaded':
+                    port.postMessage({query: 'init'});
+                    break;
 
-// Wait for popup load
-window.addEventListener('load', async () => {
-    chrome.tabs.query({active: true, currentWindow: true}, tabs => {
-        chrome.tabs.sendMessage(tabs[0].id, {query: 'alreadyRun'});
-    });
+                case 'initResponse':
+                    port.postMessage({query: 'main'});
+                    break;
 
+                case 'getDisplayedUsersResponse':               
+                    window.displayedUsers = message.displayedUsers;
+                    break;
 
-    // Fetch sites.json
-    window.sites = await ( await fetch('../sites.json') ).json();
+                case 'getAllUsersResponse':
+                    window.allUsers = message.allUsers;
+                    break;
 
-    // Get the URL of the current site to run the appropriate script.
-    chrome.storage.sync.get(['activeSite'], result => {
-        let siteURL = result.activeSite;
+                case 'getAllUserDataResponse':
+                    window.allUserData = message.allUserData;
+                    break;
 
-        // Run appropriate script on click
-        document.getElementById('refresh-button').addEventListener('click', () => {
-            chrome.tabs.executeScript({
-                file: `/src/scripts/${sites[siteURL].script}`
-            });  
-        });
-    });
-});
-
-chrome.runtime.onMessage.addListener(message => {
-    if (message.query === 'popupInit') {
-        const allUserInfo = message.allUserInfo;
-        const displayedUsers = message.displayedUsers;
-    
-        let users = document.getElementById('users');
-    
-        // Clear users in pop up
-        Array.from(document.getElementsByClassName('popup__user')).forEach(user => {
-            user.remove();
-        });
-    
-        displayedUsers.forEach((userPath, index) => {
-            const userInfo = allUserInfo.find(user => user.path === userPath);
-            let user = document.createElement('div');
-            user.className = 'popup__user';
-            
-            user.innerHTML = `
-                            <div class="popup__user-color-container">
-                                <label for="user-color-${index}" style="background-color:${userInfo.color}" id="user-color-${index}-label" class="popup__user-color-label">
-                                    <input type="color" class="popup__user-color-input" id="user-color-${index}">
-                                    <i class="fas fa-eye-dropper"></i>
-                                </label>
-                            </div>
-                            <div class="popup__username">
-                                @${userInfo.path.slice(1)}
-                            </div>
-                            <div class="popup__button-container">
-                                <input type="checkbox" id="toggle-${index}" class="popup__toggle-input" checked>
-                                <label for="toggle-${index}" class="popup__toggle-label" id="toggle-${index}-label">
-                                    <div class="toggle-switch">
-                                        <i class="fas fa-eye toggle-visible"></i>
-                                        <i class="fas fa-eye-slash toggle-hidden"></i>
-                                    </div>
-                                </label>
-                            </div>
-                            `;
-            users.appendChild(user);
-            document.getElementById(`user-color-${index}`).addEventListener('change', () => {
-                const color = document.getElementById(`user-color-${index}`).value;
-                document.getElementById(`user-color-${index}-label`).style.backgroundColor = color;
-                setColor(userInfo.path, color);
-            });
-            document.getElementById(`toggle-${index}-label`).addEventListener('click', () => {
-                toggleVisibility(userInfo.path, index);
-            });
+                case 'mainComplete':
+                    window.displayedUsers = message.displayedUsers;
+                    window.allUserData = message.allUserData;
+                    main();
+            }
         });
     }
 });
 
+// - - - - - - - - - - - - - - - - - - -
+//  Pop-up Initialisation
+// - - - - - - - - - - - - - - - - - - -
 
-function toggleVisibility(userPath, index) {
-    // Send message to content script to remove styling from provided user.
-    chrome.tabs.query({active: true, currentWindow: true}, tabs => {
-        chrome.tabs.sendMessage(tabs[0].id, {query: 'toggleVisibility', userPath: userPath});
+window.addEventListener('load', async () => {
+    // Fetch sites.json
+    window.sites = await (await fetch('../sites.json')).json();
+
+    // Get the URL of the current site to run the appropriate script.
+    chrome.storage.sync.get(['activeSite'], result => {
+        window.siteURL = result.activeSite;
     });
-}
 
-function setColor(userPath, color) {
-    // Send message to content script to change the color of the provided user.
-    chrome.tabs.query({active: true, currentWindow: true}, tabs => {
-        chrome.tabs.sendMessage(tabs[0].id, {query: 'setColor', userPath: userPath, color: color});
+    // Run appropriate script on click
+    document.getElementById('refresh-button').addEventListener('click', () => {
+        chrome.tabs.executeScript({ file: `/src/scripts/${sites[siteURL].script}` });
+    });
+
+    // Redirect to config page
+    document.getElementById('config-button').addEventListener('click', () => {
+        chrome.tabs.create({ url: 'src/config/config.html' });
+    });
+
+    document.getElementById('precise-time').addEventListener('click', () => {
+        port.postMessage({query: 'preciseTime', format: document.getElementById('precise-time').checked ? 'precise' : 'timeSince'});
+    });
+});
+
+// - - - - - - - - - - - - - - - - - - -
+//  Main
+// - - - - - - - - - - - - - - - - - - -
+
+function main() {
+    const userManagement = document.getElementById('user-management');
+
+    // Clear users in user management
+    while (userManagement.firstChild) {
+        userManagement.removeChild(userManagement.lastChild);
+    }
+
+    displayedUsers.forEach((userPath, index) => {
+        const userData = allUserData.find(user => user.path === userPath);
+
+        // Create element
+        let user = document.createElement('div');
+        user.className = 'popup__user';
+
+        user.innerHTML = `
+                        <div class="popup__user-color-container">
+                            <label for="user-color-${index}" style="background-color:${userData.color}" id="user-color-${index}-label" class="popup__user-color-label">
+                                <input type="color" class="popup__user-color-input" id="user-color-${index}">
+                                <i class="fas fa-eye-dropper"></i>
+                            </label>
+                        </div>
+                        <div class="popup__username">
+                            @${userData.path.slice(1)}
+                        </div>
+                        <div class="popup__button-container">
+                            <input type="checkbox" id="toggle-${index}" class="popup__toggle-input" checked>
+                            <label for="toggle-${index}" class="popup__toggle-label" id="toggle-${index}-label">
+                                <div class="toggle-switch">
+                                    <i class="fas fa-eye toggle-visible"></i>
+                                    <i class="fas fa-eye-slash toggle-hidden"></i>
+                                </div>
+                            </label>
+                        </div>
+                        `;
+
+        userManagement.appendChild(user);
+
+        document.getElementById(`user-color-${index}`).addEventListener('change', () => {
+            const color = document.getElementById(`user-color-${index}`).value;
+            document.getElementById(`user-color-${index}-label`).style.backgroundColor = color;
+            port.postMessage({ query: 'setColor', userPath: userPath, color: color });
+            
+        });
+
+        document.getElementById(`toggle-${index}-label`).addEventListener('click', () => {
+            port.postMessage({ query: 'toggleVisibility', userPath: userPath });
+        });
     });
 }
