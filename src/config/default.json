@@ -9,24 +9,30 @@
         "backgroundColor": "rgb(167, 180, 199)"
     },
     "0": {
-        "backgroundColor": "rgb(255, 48, 86)"
+        "backgroundColor": "rgb(253, 90, 117)"
     },
     "1": {
-        "backgroundColor": "rgb(255, 174, 0)"
+        "backgroundColor": "rgb(253, 177, 90)"
     },
     "2": {
-        "backgroundColor": "rgb(255, 221, 0)"
+        "backgroundColor": "rgb(253, 210, 90)"
     },
     "3": {
-        "backgroundColor": "rgb(101, 207, 143)"
+        "backgroundColor": "rgb(173, 255, 148)"
     },
     "4": {
-        "backgroundColor": "rgb(82, 119, 199)"
+        "backgroundColor": "rgb(90, 253, 191)"
     },
     "5": {
-        "backgroundColor": "rgb(140, 0, 255)"
+        "backgroundColor": "rgb(90, 229, 253)"
     },
     "6": {
-        "backgroundColor": "rgb(238, 87, 255)"
+        "backgroundColor": "rgb(90, 142, 253)"
+    },
+    "7": {
+        "backgroundColor": "rgb(125, 90, 253)"
+    },
+    "8": {
+        "backgroundColor": "rgb(234, 90, 253)"
     }
 }

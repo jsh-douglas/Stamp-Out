@@ -2,41 +2,54 @@
 //  Port Messaging
 // - - - - - - - - - - - - - - - - - - -
 
-chrome.runtime.onConnect.addListener(port => {
-    if (port.name === 'popupConnection') {
-        window.port = port;
-        port.onMessage.addListener(message => {
-            switch (message.query) {
-                case 'scriptLoaded':
-                    port.postMessage({query: 'init'});
-                    break;
+// chrome.runtime.onConnect.addListener(port => {
+//     if (port.name === 'popupConnection') {
+//         window.port = port;
+//         port.onMessage.addListener(message => {
+//             switch (message.query) {
+//                 case 'initResponse':
+//                     port.postMessage({query: 'main'});
+//                     break;
 
-                case 'initResponse':
-                    port.postMessage({query: 'main'});
-                    break;
+//                 case 'getDisplayedUsersResponse':               
+//                     window.displayedUsers = message.displayedUsers;
+//                     break;
 
-                case 'getDisplayedUsersResponse':               
-                    window.displayedUsers = message.displayedUsers;
-                    break;
+//                 case 'getAllUsersResponse':
+//                     window.allUsers = message.allUsers;
+//                     break;
 
-                case 'getAllUsersResponse':
-                    window.allUsers = message.allUsers;
-                    break;
+//                 case 'getAllUserDataResponse':
+//                     window.allUserData = message.allUserData;
+//                     break;
 
-                case 'getAllUserDataResponse':
-                    window.allUserData = message.allUserData;
-                    break;
+//                 case 'mainComplete':
+//                     window.displayedUsers = message.displayedUsers;
+//                     window.allUserData = message.allUserData;
+//                     main();
+//             }
+//         });
+//     }
+// });
 
-                case 'mainComplete':
-                    window.displayedUsers = message.displayedUsers;
-                    window.allUserData = message.allUserData;
-                    main();
-            }
-        });
-    }
+chrome.tabs.executeScript({ file: `/src/scripts/twitter.js` });
+
+chrome.tabs.query({ active: true, currentWindow: true }, tabs => {
+    window.port = chrome.tabs.connect(tabs[0].id, { name: "scriptConnection" });
+
+    port.postMessage({ query: "initialise" });
+    
+    port.onMessage.addListener(message => {
+        switch (message.query) {
+            case 'mainComplete':
+                window.displayedUsers = message.displayedUsers;
+                window.displayedUserData = message.displayedUserData;
+                main();
+        }
+    });
 });
 
-// - - - - - - - - - - - - - - - - - - -
+// - - - - - - - - - - - - - - - - - - - 
 //  Pop-up Initialisation
 // - - - - - - - - - - - - - - - - - - -
 
@@ -47,11 +60,12 @@ window.addEventListener('load', async () => {
     // Get the URL of the current site to run the appropriate script.
     chrome.storage.sync.get(['activeSite'], result => {
         window.siteURL = result.activeSite;
+        // chrome.tabs.executeScript({ file: `/src/scripts/${sites[siteURL].script}` });
     });
 
     // Run appropriate script on click
     document.getElementById('refresh-button').addEventListener('click', () => {
-        chrome.tabs.executeScript({ file: `/src/scripts/${sites[siteURL].script}` });
+        port.postMessage({query: 'main'});
     });
 
     // Redirect to config page
@@ -77,7 +91,7 @@ function main() {
     }
 
     displayedUsers.forEach((userPath, index) => {
-        const userData = allUserData.find(user => user.path === userPath);
+        const userData = displayedUserData.find(user => user.path === userPath);
 
         // Create element
         let user = document.createElement('div');
@@ -106,15 +120,16 @@ function main() {
 
         userManagement.appendChild(user);
 
-        document.getElementById(`user-color-${index}`).addEventListener('change', () => {
-            const color = document.getElementById(`user-color-${index}`).value;
+        const userColor = document.getElementById(`user-color-${index}`);
+        userColor.addEventListener('change', () => {
+            const color = userColor.value;
             document.getElementById(`user-color-${index}-label`).style.backgroundColor = color;
             port.postMessage({ query: 'setColor', userPath: userPath, color: color });
-            
         });
 
-        document.getElementById(`toggle-${index}-label`).addEventListener('click', () => {
-            port.postMessage({ query: 'toggleVisibility', userPath: userPath });
+        const toggleSwitch = document.getElementById(`toggle-${index}`);
+        toggleSwitch.addEventListener('click', () => {
+            port.postMessage({ query: 'toggleVisibility', userPath: userPath, hidden: toggleSwitch.checked });
         });
     });
 }

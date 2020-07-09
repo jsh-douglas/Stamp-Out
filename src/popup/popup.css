@@ -435,3 +435,15 @@ body {
     /* Other */
     background-color: rgb(var(--theme));
 }
+
+.x {
+    background-color: rgb(253, 90, 117);
+    background-color: rgb(253, 177, 90);
+    background-color: rgb(253, 210, 90);
+    background-color: rgb(173, 255, 148);
+    background-color: rgb(90, 253, 191);
+    background-color: rgb(90, 229, 253);
+    background-color: rgb(90, 142, 253);
+    background-color: rgb(125, 90, 253);
+    background-color: rgb(234, 90, 253);
+}
