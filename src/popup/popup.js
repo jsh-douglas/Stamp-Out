@@ -2,36 +2,6 @@
 //  Port Messaging
 // - - - - - - - - - - - - - - - - - - -
 
-// chrome.runtime.onConnect.addListener(port => {
-//     if (port.name === 'popupConnection') {
-//         window.port = port;
-//         port.onMessage.addListener(message => {
-//             switch (message.query) {
-//                 case 'initResponse':
-//                     port.postMessage({query: 'main'});
-//                     break;
-
-//                 case 'getDisplayedUsersResponse':               
-//                     window.displayedUsers = message.displayedUsers;
-//                     break;
-
-//                 case 'getAllUsersResponse':
-//                     window.allUsers = message.allUsers;
-//                     break;
-
-//                 case 'getAllUserDataResponse':
-//                     window.allUserData = message.allUserData;
-//                     break;
-
-//                 case 'mainComplete':
-//                     window.displayedUsers = message.displayedUsers;
-//                     window.allUserData = message.allUserData;
-//                     main();
-//             }
-//         });
-//     }
-// });
-
 chrome.tabs.executeScript({ file: `/src/scripts/twitter.js` });
 
 chrome.tabs.query({ active: true, currentWindow: true }, tabs => {

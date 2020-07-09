@@ -32,13 +32,21 @@ chrome.runtime.onConnect.addListener(port => {
     }
 });
 
+// - - - - - - - - - - - - - - - - - - -
+//  Initialisation
+// - - - - - - - - - - - - - - - - - - -
+
 function initialise() {
     if (typeof initComplete == 'undefined') {
         // Prevent code repeating
         window.initComplete = true;
 
         // Element attributes used for selecting hyperlinks
-        window.userLink = 'a.css-4rbku5.css-18t94o4.css-1dbjc4n.r-1loqt21.r-1wbh5a2.r-dnmrzs.r-1ny4l3l';
+        window.userLink = [
+            'a.css-4rbku5.css-18t94o4.css-1dbjc4n.r-1loqt21.r-1wbh5a2.r-dnmrzs.r-1ny4l3l', 
+            'div[class="css-1dbjc4n"] > a.css-4rbku5.css-18t94o4.css-901oao.r-1re7ezh.r-1loqt21.r-1qd0xha.r-a023e6.r-16dba41.r-ad9z0x.r-bcqeeo.r-qvutc0',
+            'div.css-1dbjc4n.r-xoduu5 > span.r-18u37iz > a.css-4rbku5.css-18t94o4.css-901oao.css-16my406.r-daml9f.r-1loqt21.r-1qd0xha.r-ad9z0x.r-bcqeeo.r-qvutc0'
+        ];
         window.profilePictureClass = 'css-4rbku5 css-18t94o4 css-1dbjc4n r-sdzlij r-1loqt21 r-1adg3ll r-ahm1il r-1ny4l3l r-1udh08x r-o7ynqc r-6416eg r-13qz1uu';
 
         window.displayedUsers = new Set();
@@ -50,6 +58,10 @@ function initialise() {
         });
     }
 }
+
+// - - - - - - - - - - - - - - - - - - -
+//  Main script for hiding users.
+// - - - - - - - - - - - - - - - - - - -
 
 function main() {
     // Remove styling from all previously hidden users
