@@ -43,10 +43,9 @@ function initialise() {
 
         // Element attributes used for selecting hyperlinks
         window.userLink = [
-            'a._2tbHP6ZydRpjI44J3syuqC._23wugcdiaj44hdfugIAlnX.oQctV4n0yUb0uiHDdGnmE',
-            'a.f3THgbzMYccGW8vbqZBUH._23wugcdiaj44hdfugIAlnX'
-            ];
-        window.profilePictureClass = 'css-4rbku5 css-18t94o4 css-1dbjc4n r-sdzlij r-1loqt21 r-1adg3ll r-ahm1il r-1ny4l3l r-1udh08x r-o7ynqc r-6416eg r-13qz1uu';
+            'span.fwb.fcg > a'
+        ];
+        window.profilePictureClass = '_5pb8 q_1c0a0h-xei _8o _8s lfloat _ohe';
 
         window.displayedUsers = new Set();
         window.displayedUserData = [];
@@ -76,6 +75,7 @@ function main() {
     document.querySelectorAll(userLink).forEach(hyperlink => {
         // Use hyperlink to get user's account name
         let userPath = (new URL(hyperlink.href)).pathname;
+        console.log(userPath);
         displayedUsers.add(userPath);
     });
 
@@ -102,7 +102,7 @@ function main() {
 // - - - - - - - - - - - - - - - - - - -
 
 function showUser(userPath) {
-    document.querySelectorAll(`a[href='${userPath}']`).forEach(element => {
+    document.querySelectorAll(`a[href*='${userPath}']`).forEach(element => {
         // Show child elements.
         for (let i = 0; i < element.children.length; i++) {
             element.children[i].style.setProperty('opacity', 1);
@@ -122,7 +122,7 @@ function showUser(userPath) {
 
 function hideUser(userPath) {
     const userData = displayedUserData.find(user => user.path === userPath);
-    document.querySelectorAll(`a[href='${userPath}']`).forEach(element => {
+    document.querySelectorAll(`a[href*='${userPath}']`).forEach(element => {
         // Hide child elements.
         for (let i = 0; i < element.children.length; i++) {
             element.children[i].style.setProperty('transition', pageStyle.all.transition);

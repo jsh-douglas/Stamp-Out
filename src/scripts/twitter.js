@@ -42,11 +42,33 @@ function initialise() {
         window.initComplete = true;
 
         // Element attributes used for selecting hyperlinks
-        window.userLink = [
-            'a.css-4rbku5.css-18t94o4.css-1dbjc4n.r-1loqt21.r-1wbh5a2.r-dnmrzs.r-1ny4l3l', 
-            'div[class="css-1dbjc4n"] > a.css-4rbku5.css-18t94o4.css-901oao.r-1re7ezh.r-1loqt21.r-1qd0xha.r-a023e6.r-16dba41.r-ad9z0x.r-bcqeeo.r-qvutc0',
-            'div.css-1dbjc4n.r-xoduu5 > span.r-18u37iz > a.css-4rbku5.css-18t94o4.css-901oao.css-16my406.r-daml9f.r-1loqt21.r-1qd0xha.r-ad9z0x.r-bcqeeo.r-qvutc0'
-        ];
+        // window.userLink = [
+        //     'a.css-4rbku5.css-18t94o4.css-1dbjc4n.r-1loqt21.r-1wbh5a2.r-dnmrzs.r-1ny4l3l', 
+        //     'div[class="css-1dbjc4n"] > a.css-4rbku5.css-18t94o4.css-901oao.r-1re7ezh.r-1loqt21.r-1qd0xha.r-a023e6.r-16dba41.r-ad9z0x.r-bcqeeo.r-qvutc0',
+        //     'div.css-1dbjc4n.r-xoduu5 > span.r-18u37iz > a.css-4rbku5.css-18t94o4.css-901oao.css-16my406.r-daml9f.r-1loqt21.r-1qd0xha.r-ad9z0x.r-bcqeeo.r-qvutc0'
+        // ];
+
+        // Main
+        // Retweet
+        // Tag
+        window.userLinks = {
+            'a.css-4rbku5.css-18t94o4.css-1dbjc4n.r-1loqt21.r-1wbh5a2.r-dnmrzs.r-1ny4l3l': {
+                relativeAttributePath: [],
+                hideMethod: 'standard'
+            },
+            'div[class="css-1dbjc4n"] > a.css-4rbku5.css-18t94o4.css-901oao.r-1re7ezh.r-1loqt21.r-1qd0xha.r-a023e6.r-16dba41.r-ad9z0x.r-bcqeeo.r-qvutc0': {
+                relativeAttributePath: ['firstElementChild', 'firstElementChild', 'firstElementChild'],
+                hideMethod: 'standard'
+            },
+            'div.css-1dbjc4n.r-xoduu5 > span.r-18u37iz > a.css-4rbku5.css-18t94o4.css-901oao.css-16my406.r-daml9f.r-1loqt21.r-1qd0xha.r-ad9z0x.r-bcqeeo.r-qvutc0': {
+                relativeAttributePath: [],
+                hideMethod: 'standard'
+            },
+            'div.css-1dbjc4n.r-156q2ks a.css-1dbjc4n.r-1awozwy.r-18u37iz.r-1wbh5a2.r-dnmrzs.r-1ny4l3l': {
+                relativeAttributePath: [],
+                hideMethod: 'standard'
+            }
+        };
         window.profilePictureClass = 'css-4rbku5 css-18t94o4 css-1dbjc4n r-sdzlij r-1loqt21 r-1adg3ll r-ahm1il r-1ny4l3l r-1udh08x r-o7ynqc r-6416eg r-13qz1uu';
 
         window.displayedUsers = new Set();
@@ -58,6 +80,9 @@ function initialise() {
         });
     }
 }
+
+// Retweet handles
+document.querySelectorAll('div.css-1dbjc4n.r-156q2ks div.css-901oao.css-bfa6kz.r-1re7ezh.r-18u37iz.r-1qd0xha.r-a023e6.r-16dba41.r-ad9z0x.r-bcqeeo.r-qvutc0 > span.css-901oao.css-16my406.r-1qd0xha.r-ad9z0x.r-bcqeeo.r-qvutc0');
 
 // - - - - - - - - - - - - - - - - - - -
 //  Main script for hiding users.
@@ -73,12 +98,26 @@ function main() {
     displayedUsers.clear();
     displayedUserData.length = 0;
 
+    // Rewteet handles don't use hyperlinks, to fix this, 
+    // the following code will get the appropriate div and 
+    // copy all data to a hyperlink tag and replace the element
+    document.querySelectorAll('div.css-1dbjc4n.r-156q2ks div.css-1dbjc4n.r-1awozwy.r-18u37iz.r-1wbh5a2.r-dnmrzs.r-1ny4l3l').forEach(retweetUserElement => {
+        let replacementElement = document.createElement('a');
+        replacementElement.setAttribute('class', 'css-1dbjc4n r-1awozwy r-18u37iz r-1wbh5a2 r-dnmrzs r-1ny4l3l');
+        replacementElement.setAttribute('href', `/${retweetUserElement.children[1].firstChild.firstChild.innerHTML.slice(1)}`);
+        replacementElement.style.setProperty('text-decoration', 'none');
+        replacementElement.innerHTML = retweetUserElement.innerHTML;
+        retweetUserElement.parentNode.replaceChild(replacementElement, retweetUserElement);
+    });
+
     // Get all users present on page.
-    document.querySelectorAll(userLink).forEach(hyperlink => {
+    document.querySelectorAll(Object.keys(userLinks)).forEach(hyperlink => {
         // Use hyperlink to get user's account name
         let userPath = (new URL(hyperlink.href)).pathname;
         displayedUsers.add(userPath);
     });
+
+    console.log(displayedUsers);
 
     // Convert users set to array to allow for indexing with the forEach() function.
     Array.from(displayedUsers).forEach((userPath, index) => {
@@ -96,6 +135,14 @@ function main() {
 
         hideUser(userPath);
     });
+
+    // document.querySelectorAll(`div.css-1dbjc4n.r-156q2ks 
+    // div.css-901oao.css-bfa6kz.r-1re7ezh.r-18u37iz.r-1qd0xha.r-a023e6.r-16dba41.r-ad9z0x.r-bcqeeo.r-qvutc0 > 
+    // span.css-901oao.css-16my406.r-1qd0xha.r-ad9z0x.r-bcqeeo.r-qvutc0`).forEach(userHandle => {
+
+    // });
+            
+
 }
 
 // - - - - - - - - - - - - - - - - - - -
@@ -122,26 +169,53 @@ function showUser(userPath) {
 // - - - - - - - - - - - - - - - - - - -
 
 function hideUser(userPath) {
-    const userData = displayedUserData.find(user => user.path === userPath);
+    window.userData = displayedUserData.find(user => user.path === userPath);
     document.querySelectorAll(`a[href='${userPath}']`).forEach(element => {
-        // Hide child elements.
-        for (let i = 0; i < element.children.length; i++) {
-            element.children[i].style.setProperty('transition', pageStyle.all.transition);
-            element.children[i].style.setProperty('opacity', 0);
-        }
+        
+        let relativeAttributePath;
+        let targetQuerySelector;
+        Object.keys(userLinks).forEach(querySelector => {
+            if (element.matches(querySelector)) {
+                targetQuerySelector = querySelector;
+                relativeAttributePath = userLinks[querySelector].relativeAttributePath;
+            }
+        });
+        
+        if (typeof relativeAttributePath !== 'undefined') {
+            targetElement = element;
+            if (relativeAttributePath.length !== 0) {
+                relativeAttributePath.forEach(attribute => {
+                    targetElement = targetElement[attribute];
+                });
+            }
 
-        // Apply Styling.
-        element.style.setProperty('background-color', userData.color);
-        element.style.setProperty('box-shadow', pageStyle.all.boxShadow);
-        element.style.setProperty('color', pageStyle.all.color);
-        element.style.setProperty('transition', pageStyle.all.transition);
-
-        // Profile pictures are circular and so have a border radius reflecting that.
-        if (element.className === profilePictureClass) {
-            element.style.setProperty('border-radius', '100%');
-        } else {
-            element.style.setProperty('border-radius', pageStyle.all.borderRadius);
+            switch (userLinks[targetQuerySelector].hideMethod) {
+                case 'standard':
+                    for (let i = 0; i < targetElement.children.length; i++) {
+                        targetElement.children[i].style.setProperty('transition', pageStyle.all.transition);
+                        targetElement.children[i].style.setProperty('opacity', 0);
+                    }
+                
+                    // Apply Styling.
+                    targetElement.style.setProperty('background-color', userData.color);
+                    targetElement.style.setProperty('box-shadow', pageStyle.all.boxShadow);
+                    targetElement.style.setProperty('color', pageStyle.all.color);
+                    targetElement.style.setProperty('transition', pageStyle.all.transition);
+                
+                    // Profile pictures are circular and so have a border radius reflecting that.
+                    if (targetElement.className === profilePictureClass) {
+                        targetElement.style.setProperty('border-radius', '100%');
+                    } else {
+                        targetElement.style.setProperty('border-radius', pageStyle.all.borderRadius);
+                    }
+                    break;
+                case 'like':
+                    break;
+            }
+            // Hide child elements.
+            
         }
+        
     });
 }
 

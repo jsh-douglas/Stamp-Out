@@ -2,22 +2,10 @@
 //  Port Messaging
 // - - - - - - - - - - - - - - - - - - -
 
-chrome.tabs.executeScript({ file: `/src/scripts/twitter.js` });
 
-chrome.tabs.query({ active: true, currentWindow: true }, tabs => {
-    window.port = chrome.tabs.connect(tabs[0].id, { name: "scriptConnection" });
 
-    port.postMessage({ query: "initialise" });
-    
-    port.onMessage.addListener(message => {
-        switch (message.query) {
-            case 'mainComplete':
-                window.displayedUsers = message.displayedUsers;
-                window.displayedUserData = message.displayedUserData;
-                main();
-        }
-    });
-});
+
+
 
 // - - - - - - - - - - - - - - - - - - - 
 //  Pop-up Initialisation
@@ -27,10 +15,32 @@ window.addEventListener('load', async () => {
     // Fetch sites.json
     window.sites = await (await fetch('../sites.json')).json();
 
+    
+
     // Get the URL of the current site to run the appropriate script.
     chrome.storage.sync.get(['activeSite'], result => {
         window.siteURL = result.activeSite;
-        // chrome.tabs.executeScript({ file: `/src/scripts/${sites[siteURL].script}` });
+
+        window.usernameSliceStart = sites[siteURL].usernameSliceStart;
+        window.usernameSliceEnd = sites[siteURL].usernameSliceEnd;
+        window.usernamePrefix = sites[siteURL].usernamePrefix;
+        
+        chrome.tabs.executeScript({ file: `/src/scripts/${sites[siteURL].script}` });
+
+        chrome.tabs.query({ active: true, currentWindow: true }, tabs => {
+            window.port = chrome.tabs.connect(tabs[0].id, { name: "scriptConnection" });
+        
+            port.postMessage({ query: "initialise" });
+            
+            port.onMessage.addListener(message => {
+                switch (message.query) {
+                    case 'mainComplete':
+                        window.displayedUsers = message.displayedUsers;
+                        window.displayedUserData = message.displayedUserData;
+                        main();
+                }
+            });
+        });
     });
 
     // Run appropriate script on click
@@ -75,7 +85,7 @@ function main() {
                             </label>
                         </div>
                         <div class="popup__username">
-                            @${userData.path.slice(1)}
+                            ${usernamePrefix}${userData.path.slice(usernameSliceStart, usernameSliceEnd)}
                         </div>
                         <div class="popup__button-container">
                             <input type="checkbox" id="toggle-${index}" class="popup__toggle-input" checked>

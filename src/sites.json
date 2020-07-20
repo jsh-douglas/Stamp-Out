@@ -5,14 +5,28 @@
             "http://twitter.com"
         ],
         "script": "twitter.js",
-        "theme": "0, 172, 238"
+        "theme": "0, 172, 238",
+        "usernameSliceStart": "1",
+        "usernamePrefix": "@"
     },
-    "reddit.com": {
+    "www.reddit.com": {
         "urls": [
             "https://www.reddit.com",
             "http://www.reddit.com"
         ],
         "script": "reddit.js",
-        "theme": "255, 86, 0"
+        "theme": "255, 86, 0",
+        "usernameSliceStart": "6",
+        "usernameSliceEnd": "-1",
+        "usernamePrefix": "u/"
+    },
+    "www.facebook.com": {
+        "urls": [
+            "https://www.facebook.com/",
+            "http://www.facebook.com/"
+        ],
+        "script": "facebook.js",
+        "theme": "255, 86, 0",
+        "usernamePrefix": ""
     }
 }
