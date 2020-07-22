@@ -12,7 +12,7 @@
 
 
 
-![Stamp Out Coloured Logo](.\src\promotional\Coloured Logo.svg)
+![Stamp Out Coloured Logo](./src/promotional/Coloured Logo.svg)
 
 "Stamp Out Logo" is a derivative of  "[Solid Style Stamp Icon](https://fontawesome.com/icons/stamp?style=solid)" by [FontAwesome](https://fontawesome.com/), used under [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/). "Stamp Out Logo" is licensed under [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/) by Josh Douglas
 
