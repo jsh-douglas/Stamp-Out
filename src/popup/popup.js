@@ -101,7 +101,7 @@ function main() {
         userManagement.appendChild(user);
 
         const userColor = document.getElementById(`user-color-${index}`);
-        userColor.addEventListener('change', () => {
+        userColor.addEventListener('input', () => {
             const color = userColor.value;
             document.getElementById(`user-color-${index}-label`).style.backgroundColor = color;
             port.postMessage({ query: 'setColor', userPath: userPath, color: color });

@@ -26,5 +26,10 @@
             "js": ["/src/content scripts/supported.js"],
             "run_at": "document_start"
         }
-    ]
+    ],
+    "icons": { 
+        "16": "/src/icons/icon16.png",
+        "48": "/src/icons/icon48.png",
+        "128": "/src/icons/icon128.png" 
+    }
 }

@@ -51,6 +51,10 @@ function initialise() {
         // Main
         // Retweet
         // Tag
+        // Retweed User
+        // Retweet tagged
+        // Profile Picture
+        // Replying to
         window.userLinks = {
             'a.css-4rbku5.css-18t94o4.css-1dbjc4n.r-1loqt21.r-1wbh5a2.r-dnmrzs.r-1ny4l3l': {
                 relativeAttributePath: [],
@@ -67,6 +71,14 @@ function initialise() {
             'div.css-1dbjc4n.r-156q2ks a.css-1dbjc4n.r-1awozwy.r-18u37iz.r-1wbh5a2.r-dnmrzs.r-1ny4l3l': {
                 relativeAttributePath: [],
                 hideMethod: 'standard'
+            },
+            'div.css-1dbjc4n.r-156q2ks span.r-18u37iz > a.css-901oao.css-16my406.r-1qd0xha.r-ad9z0x.r-bcqeeo.r-qvutc0': {
+                relativeAttributePath: [],
+                hideMethod: 'standard'
+            },
+            'a.css-4rbku5.css-18t94o4.css-1dbjc4n.r-sdzlij.r-1loqt21.r-1adg3ll.r-ahm1il.r-1ny4l3l.r-1udh08x.r-o7ynqc.r-6416eg.r-13qz1uu': {
+                relativeAttributePath: [],
+                hideMethod: 'standard'
             }
         };
         window.profilePictureClass = 'css-4rbku5 css-18t94o4 css-1dbjc4n r-sdzlij r-1loqt21 r-1adg3ll r-ahm1il r-1ny4l3l r-1udh08x r-o7ynqc r-6416eg r-13qz1uu';
@@ -80,9 +92,6 @@ function initialise() {
         });
     }
 }
-
-// Retweet handles
-document.querySelectorAll('div.css-1dbjc4n.r-156q2ks div.css-901oao.css-bfa6kz.r-1re7ezh.r-18u37iz.r-1qd0xha.r-a023e6.r-16dba41.r-ad9z0x.r-bcqeeo.r-qvutc0 > span.css-901oao.css-16my406.r-1qd0xha.r-ad9z0x.r-bcqeeo.r-qvutc0');
 
 // - - - - - - - - - - - - - - - - - - -
 //  Main script for hiding users.
@@ -110,14 +119,24 @@ function main() {
         retweetUserElement.parentNode.replaceChild(replacementElement, retweetUserElement);
     });
 
+    // Tags within retweets
+    document.querySelectorAll('div.css-1dbjc4n.r-156q2ks span.r-18u37iz > span.css-901oao.css-16my406.r-1qd0xha.r-ad9z0x.r-bcqeeo.r-qvutc0').forEach(retweetUserElement => {
+        let replacementElementB = document.createElement('a');
+        replacementElementB.setAttribute('class', 'css-901oao css-16my406 r-1qd0xha r-ad9z0x r-bcqeeo r-qvutc0');
+        replacementElementB.setAttribute('href', `/${retweetUserElement.innerHTML.slice(1)}`);
+        replacementElementB.style.setProperty('text-decoration', 'none');
+        replacementElementB.innerHTML = retweetUserElement.innerHTML;
+        retweetUserElement.parentNode.replaceChild(replacementElementB, retweetUserElement);
+    });
+
+    document.querySelectorAll('span.css-901oao.css-16my406.css-cens5h.r-1re7ezh.r-1qd0xha.r-n6v787.r-16dba41.r-1sf4r6n.r-bcqeeo.r-qvutc0 > span.css-901oao.css-16my406.r-1qd0xha.r-ad9z0x.r-bcqeeo.r-qvutc0 > span.css-901oao.css-16my406.r-1qd0xha.r-ad9z0x.r-bcqeeo.r-qvutc0');
+
     // Get all users present on page.
     document.querySelectorAll(Object.keys(userLinks)).forEach(hyperlink => {
         // Use hyperlink to get user's account name
         let userPath = (new URL(hyperlink.href)).pathname;
         displayedUsers.add(userPath);
     });
-
-    console.log(displayedUsers);
 
     // Convert users set to array to allow for indexing with the forEach() function.
     Array.from(displayedUsers).forEach((userPath, index) => {
@@ -203,7 +222,7 @@ function hideUser(userPath) {
                     targetElement.style.setProperty('transition', pageStyle.all.transition);
                 
                     // Profile pictures are circular and so have a border radius reflecting that.
-                    if (targetElement.className === profilePictureClass) {
+                    if (targetElement.getAttribute('class') === profilePictureClass) {
                         targetElement.style.setProperty('border-radius', '100%');
                     } else {
                         targetElement.style.setProperty('border-radius', pageStyle.all.borderRadius);
