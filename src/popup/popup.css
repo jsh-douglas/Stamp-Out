@@ -223,10 +223,13 @@ body {
     opacity: 0;
 }
 
-.popup__user-color-label > i {
-    /* Text */
-    font-size: 13px;
-    color: rgb(var(--white));
+.popup__user-color-label > svg {
+    width: 50%;
+    height: 50%;
+}
+
+.popup__user-color-label path {
+    fill: rgb(var(--white));
 }
 
 .popup__username {
