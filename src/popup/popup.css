@@ -4,11 +4,23 @@
 | ------------------------------------
 */
 
+@font-face {
+    font-family: LatoBold;
+    src: url('../font/Lato-Bold.ttf');
+}
+
+@font-face {
+    font-family: LatoRegular;
+    src: url('../font/Lato-Regular.ttf');
+}
+
+
+
 :root {
     /* Variables */
     --white: 247, 250, 253;
     --theme: 255, 90, 105;
-    font-family: 'Segoe UI', sans-serif;
+    font-family: 'LatoRegular', sans-serif;
 }
 
 * {
@@ -63,12 +75,13 @@ body {
 .popup__text {
     /* Text */
     font-size: 18px;
-    font-weight: 600;
+    font-family: 'LatoBold', sans-serif;
 }
 
 .popup__text--small {
     /* Text */
     font-size: 13px;
+    font-family: 'LatoRegular', sans-serif;
 }
 
 /*
@@ -228,7 +241,7 @@ body {
 
     /* Text */
     font-size: 18px;
-    font-weight: 600;
+    font-family: 'LatoBold', sans-serif;
     text-overflow: ellipsis;
 }
 
@@ -336,7 +349,6 @@ body {
     border-radius: 2em;
 
     /* Text */
-    color: rgb(var(--theme));
     font-size: 18px;
 
     /* Animation */
@@ -349,11 +361,19 @@ body {
 }
 
 .popup__button:hover {
-    /* Text */
-    color: rgb(var(--white));
-
-    /* Other */
     background-color: rgb(var(--theme));
+}
+
+.popup__button > svg {
+    width: 70%;
+}
+
+.popup__button > svg > path {
+    fill: rgb(var(--theme));
+}
+
+.popup__button:hover > svg > path {
+    fill: rgb(var(--white));
 }
 
 .popup__button:active {
@@ -413,9 +433,11 @@ body {
     background-color: rgb(var(--white));
 }
 
-.toggle-switch > i {
-    color: rgb(var(--theme))
+.toggle-switch > svg {
+    width: 70%;
+    height: 70%;
 }
+
       
 .popup__toggle-input:checked + .popup__toggle-label > .toggle-switch {
     /* Positioning */
@@ -428,7 +450,6 @@ body {
 
 .popup__toggle-input:checked + .popup__toggle-label > .toggle-switch > .toggle-visible {
     display: none;
-    color: rgb(197, 200, 203);
 }
 
 .popup__toggle-input:not(checked) + .popup__toggle-label > .toggle-switch > .toggle-hidden {
@@ -437,7 +458,6 @@ body {
 
 .popup__toggle-input:not(checked) + .popup__toggle-label > .toggle-switch > .toggle-visible {
     display: block;
-    color: rgb(197, 200, 203);
 }
 
 .popup__toggle-input:checked + .popup__toggle-label {

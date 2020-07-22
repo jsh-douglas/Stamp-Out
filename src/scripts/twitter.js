@@ -58,27 +58,21 @@ function initialise() {
         window.userLinks = {
             'a.css-4rbku5.css-18t94o4.css-1dbjc4n.r-1loqt21.r-1wbh5a2.r-dnmrzs.r-1ny4l3l': {
                 relativeAttributePath: [],
-                hideMethod: 'standard'
             },
             'div[class="css-1dbjc4n"] > a.css-4rbku5.css-18t94o4.css-901oao.r-1re7ezh.r-1loqt21.r-1qd0xha.r-a023e6.r-16dba41.r-ad9z0x.r-bcqeeo.r-qvutc0': {
                 relativeAttributePath: ['firstElementChild', 'firstElementChild', 'firstElementChild'],
-                hideMethod: 'standard'
             },
             'div.css-1dbjc4n.r-xoduu5 > span.r-18u37iz > a.css-4rbku5.css-18t94o4.css-901oao.css-16my406.r-daml9f.r-1loqt21.r-1qd0xha.r-ad9z0x.r-bcqeeo.r-qvutc0': {
                 relativeAttributePath: [],
-                hideMethod: 'standard'
             },
             'div.css-1dbjc4n.r-156q2ks a.css-1dbjc4n.r-1awozwy.r-18u37iz.r-1wbh5a2.r-dnmrzs.r-1ny4l3l': {
                 relativeAttributePath: [],
-                hideMethod: 'standard'
             },
             'div.css-1dbjc4n.r-156q2ks span.r-18u37iz > a.css-901oao.css-16my406.r-1qd0xha.r-ad9z0x.r-bcqeeo.r-qvutc0': {
                 relativeAttributePath: [],
-                hideMethod: 'standard'
             },
             'a.css-4rbku5.css-18t94o4.css-1dbjc4n.r-sdzlij.r-1loqt21.r-1adg3ll.r-ahm1il.r-1ny4l3l.r-1udh08x.r-o7ynqc.r-6416eg.r-13qz1uu': {
                 relativeAttributePath: [],
-                hideMethod: 'standard'
             }
         };
         window.profilePictureClass = 'css-4rbku5 css-18t94o4 css-1dbjc4n r-sdzlij r-1loqt21 r-1adg3ll r-ahm1il r-1ny4l3l r-1udh08x r-o7ynqc r-6416eg r-13qz1uu';
@@ -170,16 +164,36 @@ function main() {
 
 function showUser(userPath) {
     document.querySelectorAll(`a[href='${userPath}']`).forEach(element => {
-        // Show child elements.
-        for (let i = 0; i < element.children.length; i++) {
-            element.children[i].style.setProperty('opacity', 1);
+        let relativeAttributePath;
+        let targetQuerySelector;
+        Object.keys(userLinks).forEach(querySelector => {
+            if (element.matches(querySelector)) {
+                targetQuerySelector = querySelector;
+                relativeAttributePath = userLinks[querySelector].relativeAttributePath;
+            }
+        });
+        
+        if (typeof relativeAttributePath !== 'undefined') {
+            targetElement = element;
+            if (relativeAttributePath.length !== 0) {
+                relativeAttributePath.forEach(attribute => {
+                    targetElement = targetElement[attribute];
+                });
+            }
+
+            // Show child elements.
+            for (let i = 0; i < targetElement.children.length; i++) {
+                targetElement.children[i].style.setProperty('opacity', 1);
+            }
+
+            // Remove Styling.
+            targetElement.style.removeProperty('background-color');
+            targetElement.style.removeProperty('border-radius');
+            targetElement.style.removeProperty('box-shadow');
+            targetElement.style.removeProperty('color');
         }
 
-        // Remove Styling.
-        element.style.removeProperty('background-color');
-        element.style.removeProperty('border-radius');
-        element.style.removeProperty('box-shadow');
-        element.style.removeProperty('color');
+        
     });
 }
 
@@ -188,7 +202,7 @@ function showUser(userPath) {
 // - - - - - - - - - - - - - - - - - - -
 
 function hideUser(userPath) {
-    window.userData = displayedUserData.find(user => user.path === userPath);
+    let userData = displayedUserData.find(user => user.path === userPath);
     document.querySelectorAll(`a[href='${userPath}']`).forEach(element => {
         
         let relativeAttributePath;
@@ -208,28 +222,22 @@ function hideUser(userPath) {
                 });
             }
 
-            switch (userLinks[targetQuerySelector].hideMethod) {
-                case 'standard':
-                    for (let i = 0; i < targetElement.children.length; i++) {
-                        targetElement.children[i].style.setProperty('transition', pageStyle.all.transition);
-                        targetElement.children[i].style.setProperty('opacity', 0);
-                    }
-                
-                    // Apply Styling.
-                    targetElement.style.setProperty('background-color', userData.color);
-                    targetElement.style.setProperty('box-shadow', pageStyle.all.boxShadow);
-                    targetElement.style.setProperty('color', pageStyle.all.color);
-                    targetElement.style.setProperty('transition', pageStyle.all.transition);
-                
-                    // Profile pictures are circular and so have a border radius reflecting that.
-                    if (targetElement.getAttribute('class') === profilePictureClass) {
-                        targetElement.style.setProperty('border-radius', '100%');
-                    } else {
-                        targetElement.style.setProperty('border-radius', pageStyle.all.borderRadius);
-                    }
-                    break;
-                case 'like':
-                    break;
+            for (let i = 0; i < targetElement.children.length; i++) {
+                targetElement.children[i].style.setProperty('transition', pageStyle.all.transition);
+                targetElement.children[i].style.setProperty('opacity', 0);
+            }
+        
+            // Apply Styling.
+            targetElement.style.setProperty('background-color', userData.color);
+            targetElement.style.setProperty('box-shadow', pageStyle.all.boxShadow);
+            targetElement.style.setProperty('color', pageStyle.all.color);
+            targetElement.style.setProperty('transition', pageStyle.all.transition);
+        
+            // Profile pictures are circular and so have a border radius reflecting that.
+            if (targetElement.getAttribute('class') === profilePictureClass) {
+                targetElement.style.setProperty('border-radius', '100%');
+            } else {
+                targetElement.style.setProperty('border-radius', pageStyle.all.borderRadius);
             }
             // Hide child elements.
             
