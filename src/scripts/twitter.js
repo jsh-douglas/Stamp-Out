@@ -41,39 +41,60 @@ function initialise() {
         // Prevent code repeating
         window.initComplete = true;
 
-        // Element attributes used for selecting hyperlinks
-        // window.userLink = [
-        //     'a.css-4rbku5.css-18t94o4.css-1dbjc4n.r-1loqt21.r-1wbh5a2.r-dnmrzs.r-1ny4l3l', 
-        //     'div[class="css-1dbjc4n"] > a.css-4rbku5.css-18t94o4.css-901oao.r-1re7ezh.r-1loqt21.r-1qd0xha.r-a023e6.r-16dba41.r-ad9z0x.r-bcqeeo.r-qvutc0',
-        //     'div.css-1dbjc4n.r-xoduu5 > span.r-18u37iz > a.css-4rbku5.css-18t94o4.css-901oao.css-16my406.r-daml9f.r-1loqt21.r-1qd0xha.r-ad9z0x.r-bcqeeo.r-qvutc0'
-        // ];
-
         // Main
         // Retweet
-        // Tag
-        // Retweed User
+        // Retweet User
         // Retweet tagged
         // Profile Picture
         // Replying to
+        // window.userLinks = {
+        //     // Main
+        //     'a.css-4rbku5.css-18t94o4.css-1dbjc4n.r-1loqt21.r-1wbh5a2.r-dnmrzs.r-1ny4l3l': {
+        //         relativeAttributePath: []
+        //     },
+        //     // *User* Retweeted
+        //     'div[class="css-1dbjc4n"] > a.css-4rbku5.css-18t94o4.css-901oao.r-1re7ezh.r-1loqt21.r-1qd0xha.r-a023e6.r-16dba41.r-ad9z0x.r-bcqeeo.r-qvutc0': {
+        //         relativeAttributePath: ['firstElementChild', 'firstElementChild', 'firstElementChild']
+        //     },
+        //     // User Retweeted *User*
+        //     'div.css-1dbjc4n.r-156q2ks a.css-1dbjc4n.r-1awozwy.r-18u37iz.r-1wbh5a2.r-dnmrzs.r-1ny4l3l': {
+        //         relativeAttributePath: []
+        //     },
+        //     // User Retweeted User Tagged *User*
+        //     'div.css-1dbjc4n.r-156q2ks span.r-18u37iz > a.css-901oao.css-16my406.r-1qd0xha.r-ad9z0x.r-bcqeeo.r-qvutc0': {
+        //         relativeAttributePath: []
+        //     },
+        //     'a.css-4rbku5.css-18t94o4.css-1dbjc4n.r-sdzlij.r-1loqt21.r-1adg3ll.r-ahm1il.r-1ny4l3l.r-1udh08x.r-o7ynqc.r-6416eg.r-13qz1uu': {
+        //         relativeAttributePath: []
+        //     },
+        //     // *User* tagged in tweet
+        //     'div.css-1dbjc4n.r-xoduu5 > span.r-18u37iz > a.css-4rbku5.css-18t94o4.css-901oao.css-16my406.r-1n1174f.r-1loqt21.r-1qd0xha.r-ad9z0x.r-bcqeeo.r-qvutc0': {
+        //         relativeAttributePath: []
+        //     }
+        // };
         window.userLinks = {
+            // Main
             'a.css-4rbku5.css-18t94o4.css-1dbjc4n.r-1loqt21.r-1wbh5a2.r-dnmrzs.r-1ny4l3l': {
-                relativeAttributePath: [],
+                relativeAttributePath: []
             },
-            'div[class="css-1dbjc4n"] > a.css-4rbku5.css-18t94o4.css-901oao.r-1re7ezh.r-1loqt21.r-1qd0xha.r-a023e6.r-16dba41.r-ad9z0x.r-bcqeeo.r-qvutc0': {
-                relativeAttributePath: ['firstElementChild', 'firstElementChild', 'firstElementChild'],
+            // *User* Retweeted
+            'div.css-1dbjc4n.r-1habvwh.r-1iusvr4.r-16y2uox a.css-4rbku5.css-18t94o4.css-901oao.r-1re7ezh.r-1loqt21.r-1qd0xha.r-a023e6.r-16dba41.r-ad9z0x.r-bcqeeo.r-qvutc0': {
+                relativeAttributePath: ['firstElementChild', 'firstElementChild', 'firstElementChild']
             },
-            'div.css-1dbjc4n.r-xoduu5 > span.r-18u37iz > a.css-4rbku5.css-18t94o4.css-901oao.css-16my406.r-daml9f.r-1loqt21.r-1qd0xha.r-ad9z0x.r-bcqeeo.r-qvutc0': {
-                relativeAttributePath: [],
+            // @User
+            'div.css-1dbjc4n.r-xoduu5 > span.r-18u37iz > a.css-4rbku5.css-18t94o4.css-901oao.css-16my406.r-1n1174f.r-1loqt21.r-1qd0xha.r-ad9z0x.r-bcqeeo.r-qvutc0': {
+                relativeAttributePath: []
             },
-            'div.css-1dbjc4n.r-156q2ks a.css-1dbjc4n.r-1awozwy.r-18u37iz.r-1wbh5a2.r-dnmrzs.r-1ny4l3l': {
-                relativeAttributePath: [],
-            },
+            // ISSUE: ALSO SELECTS HASHTAGS WITHIN RETWEETS, NO UNIQUE CLASS, USE FIRST CHAR OF CONTENT AS METHOD OF DIFFERENTIATING (# OR @)
+            // Retweet: @User
             'div.css-1dbjc4n.r-156q2ks span.r-18u37iz > a.css-901oao.css-16my406.r-1qd0xha.r-ad9z0x.r-bcqeeo.r-qvutc0': {
-                relativeAttributePath: [],
+                relativeAttributePath: []
             },
-            'a.css-4rbku5.css-18t94o4.css-1dbjc4n.r-sdzlij.r-1loqt21.r-1adg3ll.r-ahm1il.r-1ny4l3l.r-1udh08x.r-o7ynqc.r-6416eg.r-13qz1uu': {
-                relativeAttributePath: [],
-            }
+            // Retweet: Main
+            'div.css-1dbjc4n.r-156q2ks a.css-1dbjc4n.r-1awozwy.r-18u37iz.r-1wbh5a2.r-dnmrzs.r-1ny4l3l': {
+                relativeAttributePath: []
+            },
+
         };
         window.profilePictureClass = 'css-4rbku5 css-18t94o4 css-1dbjc4n r-sdzlij r-1loqt21 r-1adg3ll r-ahm1il r-1ny4l3l r-1udh08x r-o7ynqc r-6416eg r-13qz1uu';
 

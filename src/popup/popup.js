@@ -15,16 +15,16 @@ window.addEventListener('load', async () => {
     // Fetch sites.json
     window.sites = await (await fetch('../sites.json')).json();
 
-
-
     // Get the URL of the current site to run the appropriate script.
     chrome.storage.sync.get(['activeSite'], result => {
         window.siteURL = result.activeSite;
 
+        // Username slicing for pop up interface
         window.usernameSliceStart = sites[siteURL].usernameSliceStart;
         window.usernameSliceEnd = sites[siteURL].usernameSliceEnd;
         window.usernamePrefix = sites[siteURL].usernamePrefix;
 
+        
         chrome.tabs.executeScript({ file: `/src/scripts/${sites[siteURL].script}` });
 
         chrome.tabs.query({ active: true, currentWindow: true }, tabs => {
@@ -41,6 +41,7 @@ window.addEventListener('load', async () => {
                 }
             });
         });
+        
     });
 
     // Run appropriate script on click
