@@ -77,6 +77,10 @@ function initialise() {
             'a.css-4rbku5.css-18t94o4.css-1dbjc4n.r-1loqt21.r-1wbh5a2.r-dnmrzs.r-1ny4l3l': {
                 relativeAttributePath: []
             },
+            // Profile Picture
+            'a.css-4rbku5.css-18t94o4.css-1dbjc4n.r-sdzlij.r-1loqt21.r-1adg3ll.r-ahm1il.r-1ny4l3l.r-1udh08x.r-o7ynqc.r-6416eg.r-13qz1uu': {
+                relativeAttributePath: []
+            },
             // *User* Retweeted
             'div.css-1dbjc4n.r-1habvwh.r-1iusvr4.r-16y2uox a.css-4rbku5.css-18t94o4.css-901oao.r-1re7ezh.r-1loqt21.r-1qd0xha.r-a023e6.r-16dba41.r-ad9z0x.r-bcqeeo.r-qvutc0': {
                 relativeAttributePath: ['firstElementChild', 'firstElementChild', 'firstElementChild']
@@ -134,7 +138,7 @@ function main() {
         retweetUserElement.parentNode.replaceChild(replacementElement, retweetUserElement);
     });
 
-    // Tags within retweets
+    // Tags within retweets 
     document.querySelectorAll('div.css-1dbjc4n.r-156q2ks span.r-18u37iz > span.css-901oao.css-16my406.r-1qd0xha.r-ad9z0x.r-bcqeeo.r-qvutc0').forEach(retweetUserElement => {
         let replacementElementB = document.createElement('a');
         replacementElementB.setAttribute('class', 'css-901oao css-16my406 r-1qd0xha r-ad9z0x r-bcqeeo r-qvutc0');
@@ -144,10 +148,15 @@ function main() {
         retweetUserElement.parentNode.replaceChild(replacementElementB, retweetUserElement);
     });
 
-    document.querySelectorAll('span.css-901oao.css-16my406.css-cens5h.r-1re7ezh.r-1qd0xha.r-n6v787.r-16dba41.r-1sf4r6n.r-bcqeeo.r-qvutc0 > span.css-901oao.css-16my406.r-1qd0xha.r-ad9z0x.r-bcqeeo.r-qvutc0 > span.css-901oao.css-16my406.r-1qd0xha.r-ad9z0x.r-bcqeeo.r-qvutc0');
-
     // Get all users present on page.
     document.querySelectorAll(Object.keys(userLinks)).forEach(hyperlink => {
+        // The query selector below selectors users tagged within retweets and also hashtags within 
+        // retweets as they share the same classes, this checks to see if the text is a hashtag and skips it if it is
+        if (hyperlink.matches('div.css-1dbjc4n.r-156q2ks span.r-18u37iz > a.css-901oao.css-16my406.r-1qd0xha.r-ad9z0x.r-bcqeeo.r-qvutc0')) {
+            if (hyperlink.innerHTML[0] === '#') {
+                return;
+            }
+        }
         // Use hyperlink to get user's account name
         let userPath = (new URL(hyperlink.href)).pathname;
         displayedUsers.add(userPath);
@@ -187,6 +196,7 @@ function showUser(userPath) {
     document.querySelectorAll(`a[href='${userPath}']`).forEach(element => {
         let relativeAttributePath;
         let targetQuerySelector;
+
         Object.keys(userLinks).forEach(querySelector => {
             if (element.matches(querySelector)) {
                 targetQuerySelector = querySelector;
