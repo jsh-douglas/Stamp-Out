@@ -18,21 +18,18 @@
         "backgroundColor": "rgb(253, 210, 90)"
     },
     "3": {
-        "backgroundColor": "rgb(173, 255, 148)"
-    },
-    "4": {
         "backgroundColor": "rgb(90, 253, 191)"
     },
-    "5": {
+    "4": {
         "backgroundColor": "rgb(90, 229, 253)"
     },
-    "6": {
+    "5": {
         "backgroundColor": "rgb(90, 142, 253)"
     },
-    "7": {
+    "6": {
         "backgroundColor": "rgb(125, 90, 253)"
     },
-    "8": {
+    "7": {
         "backgroundColor": "rgb(234, 90, 253)"
     }
 }

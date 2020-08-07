@@ -3,19 +3,162 @@
 <html>
 
 <head>
-    <title> </title>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="config.css">
+    <title>Stamp Out: Config</title>
 </head>
 
 <body>
-    <form id="config">
-        <label class="color-label" for="color-1" id="color-1-label">
-            <input type="color" class="color-input" id="color-1">
-        </label>
-        
-        <input type="submit">
-    </form>
+    <div class="main">
+        <input type="radio" id="nav__tab-radio-colors" name="nav-options" checked>
+        <input type="radio" id="nav__tab-radio-about" name="nav-options">
+        <input type="radio" id="nav__tab-radio-faq" name="nav-options">
+        <div class="nav">
+            <div class="nav__header">
+                <img src="logo.png">
+            </div>
+            <div class="nav__options">
+                
+                <ul>
+                    <li id="nav__tab-button-colors"><label for="nav__tab-radio-colors">Colors</label></li>
+                    <li id="nav__tab-button-about"><label for="nav__tab-radio-about">About</label></li>
+                    <li id="nav__tab-button-faq"><label for="nav__tab-radio-faq">FAQ</label></li>
+                </ul>
+            </div>
+        </div>
+        <div class="tabs">
+            <form id="tabs__colors">
+                <div class="tabs__header">
+                    <p>Color Customisation</p>
+                </div>
+                <div class="tabs__color-selection">
+                    <input type="radio" id="palette-1" name="palette-choice" value="1" checked>
+                    <input type="radio" id="palette-2" name="palette-choice" value="2">
+                    <input type="radio" id="palette-3" name="palette-choice" value="3">
+                    <input type="radio" id="palette-4" name="palette-choice" value="4">
+                    <input type="radio" id="palette-5" name="palette-choice" value="5">
+                    <label class="tabs__color-option" for="palette-1">
+                        <div class="tabs__color">
+                            <div class="tabs__color-circle"></div>
+                        </div>
+                        <div class="tabs__color">
+                            <div class="tabs__color-circle"></div>
+                        </div>
+                        <div class="tabs__color">
+                            <div class="tabs__color-circle"></div>
+                        </div>
+                        <div class="tabs__color">
+                            <div class="tabs__color-circle"></div>
+                        </div>
+                        <div class="tabs__color">
+                            <div class="tabs__color-circle"></div>
+                        </div>
+                        <div class="tabs__color">
+                            <div class="tabs__color-circle"></div>
+                        </div>
+                        <div class="tabs__color">
+                            <div class="tabs__color-circle"></div>
+                        </div>
+                        <div class="tabs__color">
+                            <div class="tabs__color-circle"></div>
+                        </div>
+                    </label>
+                    <label class="tabs__color-option" for="palette-2">
+                        <div class="tabs__color">
+                            <div class="tabs__color-circle"></div>
+                        </div>
+                        <div class="tabs__color">
+                            <div class="tabs__color-circle"></div>
+                        </div>
+                        <div class="tabs__color">
+                            <div class="tabs__color-circle"></div>
+                        </div>
+                        <div class="tabs__color">
+                            <div class="tabs__color-circle"></div>
+                        </div>
+                        <div class="tabs__color">
+                            <div class="tabs__color-circle"></div>
+                        </div>
+                        <div class="tabs__color">
+                            <div class="tabs__color-circle"></div>
+                        </div>
+                        <div class="tabs__color">
+                            <div class="tabs__color-circle"></div>
+                        </div>
+                        <div class="tabs__color">
+                            <div class="tabs__color-circle"></div>
+                        </div>
+                    </label>
+                    <label class="tabs__color-option" for="palette-3">
+                        <div class="tabs__color">
+                            <div class="tabs__color-circle"></div>
+                        </div>
+                        <div class="tabs__color">
+                            <div class="tabs__color-circle"></div>
+                        </div>
+                        <div class="tabs__color">
+                            <div class="tabs__color-circle"></div>
+                        </div>
+                        <div class="tabs__color">
+                            <div class="tabs__color-circle"></div>
+                        </div>
+                        <div class="tabs__color">
+                            <div class="tabs__color-circle"></div>
+                        </div>
+                    </label>
+                    <label class="tabs__color-option" for="palette-4">
+                        <div class="tabs__color">
+                            <div class="tabs__color-circle"></div>
+                        </div>
+                        <div class="tabs__color">
+                            <div class="tabs__color-circle"></div>
+                        </div>
+                        <div class="tabs__color">
+                            <div class="tabs__color-circle"></div>
+                        </div>
+                        <div class="tabs__color">
+                            <div class="tabs__color-circle"></div>
+                        </div>
+                        <div class="tabs__color">
+                            <div class="tabs__color-circle"></div>
+                        </div>
+                    </label>
+                    <label class="tabs__color-option" for="palette-5"> 
+                        <div class="tabs__color">
+                            <div class="tabs__color-circle"></div>
+                        </div>
+                        <div class="tabs__color">
+                            <div class="tabs__color-circle"></div>
+                        </div>
+                        <div class="tabs__color">
+                            <div class="tabs__color-circle"></div>
+                        </div>
+                        <div class="tabs__color">
+                            <div class="tabs__color-circle"></div>
+                        </div>
+                        <div class="tabs__color">
+                            <div class="tabs__color-circle"></div>
+                        </div>
+                    </label>
+                </div>
+                <div class="tabs__save">
+                    <input type="submit" value="Save">
+                </div>
+            </form>
+            <div id="tabs__faq">
+                <div class="tabs__header">
+                    <p>FAQ</p>
+                </div>
+            </div>
+            <div id="tabs__about">
+                <div class="tabs__header">
+                    <p>About</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    
     <script src="config.js" defer></script>
 </body>
 

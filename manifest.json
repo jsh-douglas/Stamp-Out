@@ -20,8 +20,7 @@
         {
             "matches": [
               "*://twitter.com/*",
-              "*://www.reddit.com/*",
-              "*://www.facebook.com/*"
+              "*://www.reddit.com/*"
             ],
             "js": ["/src/content scripts/supported.js"],
             "run_at": "document_start"

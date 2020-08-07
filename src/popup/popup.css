@@ -37,9 +37,6 @@ body {
 
     /* Appearence */
     background-color: rgb(var(--white));
-    /* background: rgb(255,90,105); */
-    /* background: linear-gradient(115deg, rgba(255,90,105,1) 0%, rgba(255,90,135,1) 100%); */
-    /* background-image: url("background.png"); */
 }
 
 /*

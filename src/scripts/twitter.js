@@ -68,6 +68,8 @@ function initialise() {
             'div.css-1dbjc4n.r-jdbj7n.r-sdzlij.r-rs99b7.r-1p0dtai.r-1mi75qu.r-1d2f490.r-1ny4l3l.r-u8s1d.r-zchlnj.r-ipm5af',
             // In this photo tags
             'div.css-1dbjc4n.r-18u37iz.r-1g94qm0 > a.css-4rbku5.css-18t94o4.css-901oao.r-1re7ezh.r-1loqt21.r-1qd0xha.r-a023e6.r-16dba41.r-ad9z0x.r-bcqeeo.r-qvutc0',
+            // Media Tags
+            'span.css-901oao.css-16my406.r-1re7ezh.r-1qd0xha.r-16dba41.r-ad9z0x.r-bcqeeo.r-qvutc0 > span.css-901oao.css-16my406.r-1qd0xha.r-ad9z0x.r-bcqeeo.r-qvutc0'
         ];
 
         window.userLinks = {
@@ -80,7 +82,7 @@ function initialise() {
                 relativeAttributePath: []
             },
             // *User* Retweeted
-            'div.css-1dbjc4n.r-1habvwh.r-1iusvr4.r-16y2uox a.css-4rbku5.css-18t94o4.css-901oao.r-1re7ezh.r-1loqt21.r-1qd0xha.r-a023e6.r-16dba41.r-ad9z0x.r-bcqeeo.r-qvutc0': {
+            'div.css-1dbjc4n.r-1habvwh.r-16y2uox.r-1wbh5a2 a.css-4rbku5.css-18t94o4.css-901oao.r-1re7ezh.r-1loqt21.r-1qd0xha.r-a023e6.r-16dba41.r-ad9z0x.r-bcqeeo.r-qvutc0': {
                 relativeAttributePath: ['firstElementChild', 'firstElementChild', 'firstElementChild']
             },
             // @User
@@ -159,7 +161,9 @@ function main() {
     // the following code will hide the element.
     needHiding.forEach(querySelector => {
         document.querySelectorAll(querySelector).forEach(element => {
-            element.style.setProperty('opacity', 0);
+            element.style.setProperty('background-color', '#FFFFFF');
+            element.style.setProperty('color', '#FFFFFF');
+
         });
     });
 

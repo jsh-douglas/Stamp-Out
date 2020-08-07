@@ -1,7 +1,7 @@
 // Run on installation.
 chrome.runtime.onInstalled.addListener(async () => {
     // Fetch default page styling.
-    const pageStyle = await ( await fetch('/src/config/default.json') ).json();
+    const pageStyle = await ( await fetch('/src/config/pageStyles/1.json') ).json();
 
     // Store stylesheet in Chrome synced storage.
     chrome.storage.sync.set({'pageStyle': pageStyle});

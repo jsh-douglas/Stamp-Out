@@ -1,16 +1,12 @@
-chrome.storage.sync.clear();
-chrome.storage.sync.get(null, (result) => {
-    console.log(result);
-});
+document.getElementById('tabs__colors').addEventListener('submit', async () => {
+    let selectedPalette;
+    document.getElementsByName('palette-choice').forEach(palette => {
+        if (palette.checked) {
+            selectedPalette = palette.value;
+        }
+    });
 
-const color1 = document.getElementById('color-1');
-const color1Label = document.getElementById('color-1-label');
-color1.addEventListener('change', () => {
-    color1Label.style.backgroundColor = color1.value;
-});
+    const pageStyle = await ( await fetch(`/src/config/pageStyles/${selectedPalette}.json`) ).json();
 
-const form = document.getElementById('config');
-
-form.addEventListener('submit', () => {
-    chrome.storage.sync.set({"color-1": color1.value});
+    chrome.storage.sync.set({'pageStyle': pageStyle});
 });

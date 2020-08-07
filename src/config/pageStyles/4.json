@@ -1,0 +1,26 @@
+{
+    "all": {
+        "borderRadius": ".5em",
+        "boxShadow": "unset",
+        "color": "rgba(0, 0, 0, 0)",
+        "transition": "0.2s"
+    },
+    "default": {
+        "backgroundColor": "rgb(167, 180, 199)"
+    },
+    "0": {
+        "backgroundColor": "rgb(168, 195, 98)"
+    },
+    "1": {
+        "backgroundColor": "rgb(133, 206, 195)"
+    },
+    "2": {
+        "backgroundColor": "rgb(242, 187, 110)"
+    },
+    "3": {
+        "backgroundColor": "rgb(247, 127, 84)"
+    },
+    "4": {
+        "backgroundColor": "rgb(219, 88, 67)"
+    }
+}

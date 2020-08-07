@@ -19,14 +19,5 @@
         "usernameSliceStart": "6",
         "usernameSliceEnd": "-1",
         "usernamePrefix": "u/"
-    },
-    "www.facebook.com": {
-        "urls": [
-            "https://www.facebook.com/",
-            "http://www.facebook.com/"
-        ],
-        "script": "facebook.js",
-        "theme": "255, 86, 0",
-        "usernamePrefix": ""
     }
 }
